@@ -1,0 +1,238 @@
+############################################
+###   Installing a Arch Linux System
+
+	UEFI Motherboard
+	64 bit x86 CPU
+	Normal spinning disk	
+	GPT Partition
+	GRUB 2
+	GNOME 3
+	Wired connection
+	
+############################################
+
+###   ######################################
+### A)	Setting upp storage partitions
+###   ######################################
+
+##
+## Check what kind of boot method the motherboard supports.
+##
+
+	##Master Boot Record, MBR
+	The old BIOS boot table, pre 2013 motherboards.
+
+	##GUID Partition Table, GPT
+	UEFI, post 2014 motherboards.
+
+	Check with the command:
+
+$	efivar -l
+
+	In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel.
+	If efivar lists the uefi variables properly, then you have booted in UEFI mode.
+
+##
+## Partition the storage media.
+##
+
+	Use GNUParted Live, CD or USB.
+
+	In advanced settings choose GPT and make the storage use GPT.
+
+	*This is a basic partition scheme* More advanced partitions using swap partitions and other filesystems like btrfs can be set up.
+
+	sda1 - FAT32 partition - 512 MB
+	==== - Make 1 MB of spare space for security reasons
+	sda2 - Ext4 - Can be the rest of the space
+	==== - Make 512 MB of spare space for security reasons
+
+	Do the partitioning.
+
+	Set the FAT32 to have the flag "boot"
+
+
+###   ######################################
+### B)	Installing Arch
+###   ######################################
+
+1. Show the storage medias. Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
+	
+$	fdisk -l
+
+2. Mount the partitions. First the main storage partition then the boot partition.
+
+$	mount /dev/sda2 /mnt
+
+$	mkdir /mnt/boot
+$	mkdir /mnt/boot/efi
+
+$	mount /dev/sda1 /mnt/boot/efi
+
+3. Check that there is an internet connection.
+
+$	ping -c 3 www.google.com
+
+4. Dowload the base installation on the storage partition.
+
+$	pacstrap /mtn base
+
+$	pacstrap /mnt grub-efi-x86_64
+
+5. Create a file system table.
+
+$	genfstab -p /mnt >> /mnt/etc/fstab
+
+6. Change to arch on the storage partition as root user.
+
+$	arch-chroot /mnt
+
+7. Make some io file.
+
+$	mkinitcpio -p linux
+
+8. Make a grub config file.
+
+   	*To fix an error*
+
+$	nano /etc/default/grub
+
+	Add the line at the end of the file
+
+>	GRUB_DISABLE_SUBMENU=y
+
+$	grub-mkconfig -o /boot/grub/grub.cfg
+
+9. Install GRUB 2 boot loader
+
+$	mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+
+$	pacman -S grub efibootmgr
+
+$	grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
+
+
+10. Set a password for the root.
+
+$	passwd
+
+11. Exit the arch-root user.
+
+$	exit
+
+12. Unmount the storage media.
+
+$	umount -R /mnt/boot/efi /mnt
+
+13. Reboot the computer with the systemd command.
+
+$	systemctl reboot
+
+
+###   ############################################
+### C)	Configure the installed Arch system
+###   ############################################
+
+1. Set a hostname with sytemd. The name of the computer in this example it is set to box.
+
+$	hostnamectl set-hostname box
+
+2. Find the right timezone.
+
+$ 	cd /usr/share/zoneinfo
+$	ls -al
+
+	This list available zones and each have subzones
+
+3. Set the timezone. In this example the zone is US and the subzone is Pacific.
+
+$	timedatectl set-timezone US/pacific
+
+4. Set the locale. The info about the language and keyboardlayout to be used.
+
+$	vi	/etc/loacale.gen
+
+	Uncomment the two lines corresponding to the encoding and the language to used. Remove the #. In this example the encoding is UTF-8 and the language is en_US.
+
+$	locale-gen
+
+$ 	localectl set-locale LANG="en_US.UTF-8"
+
+5. Find available internet interfaces. This can be shown like eth0, enp2s0 or something else.
+
+$	ls /sys/class/net
+
+6. Start the wired connection. In this example the internet interface was named enp2s0.
+
+$	dhcpcd enp2s0
+
+$	ping -c 3 www.google.com
+
+7. Make the wired connection start at boot with systemd. In this example the internet interface was named enp2s0.
+
+$	systemctl enable dhcpcd@enp2s0.service
+
+$	systemctl start dhcpcd@enp2s0.service
+
+8. Install NTP to get the correct time from the internet.
+
+$	pacman -S ntp
+
+$	systemctl enable ntpd.service
+
+9. Reboot the system
+
+$	systemctl reboot
+
+
+
+###   ############################################
+### D)	Install X11 server and GNOME Desktop environment
+###   ############################################
+
+
+
+$	pacman -S xorg-server-utils xorg-xinit
+
+$	pacman -S mesa
+
+$	lspci | grep VGA
+
+$	pacman -Ss xf86-video | less
+
+$ 	pacman -S xf86-video-vesa
+
+$	pacman -S xf86-video-intel
+
+$	pacman -S xorg-twm xorg-xclock xterm
+
+	*If Xorg was installed before creating the non-root user, there will be a template .xinitrc file in your home directory that needs to be either deleted or commented out.*
+
+$	rm ~/.xinitrc
+
+	Test the X11 environment
+
+$	startx
+
+$	exit
+$	pkill X
+$	reboot
+
+$	pacman -S gdm gnome-shell
+
+$	systemctl enable gdm.service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
