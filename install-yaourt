@@ -1,0 +1,47 @@
+###   ########################################
+### A)	Install base development utilities
+###   ########################################
+
+$	pacman -S base-devel
+
+$	pacman -S binutils
+
+
+###   ########################################
+### B)	Install Package Query
+###   ########################################
+
+Yaourt depends on another AUR package called Package Query which we need to install first.
+
+$	curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
+
+$	tar zxvf package-query.tar.gz
+
+$	cd package-query
+
+$	makepkg -si
+
+Install the tar.xz package you just built with the following command.
+
+$	sudo pacman -U package-query-1.0.1-1-x86_64.pkg.tar.xz
+
+
+###   ########################################
+### C)	Install Yaourt
+	http://archlinux.fr/yaourt-en
+###   ########################################
+
+
+$	curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
+
+$	tar zxvf yaourt.tar.gz
+
+$	cd yaourt
+
+$	makepkg -si
+
+Install the tar.xz package you just built with the following command.
+
+$	sudo pacman -U yaourt-1.0.1-1-any.pkg.tar.xz
+
+$	pacman -Sy yaourt
