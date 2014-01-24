@@ -1,0 +1,51 @@
+###   ###########################################
+###   CUPS - Common Unix Printing System
+###   ###########################################
+
+*There are other printing packages such as LPRNG
+
+$   pacman -S cups cups-filters ghostscript gsfonts
+
+$   systemctl enable cups
+
+$   systemctl start cups
+
+###   ###########################################
+###   Printer drivers
+###   ###########################################
+
+Choosing the right driver depends on the printer!
+
+Here are some of the driver packages:
+
+gutenprint - A collection of high quality drivers for Canon, Epson, Lexmark, Sony, Olympus, and PCL printers for use with GhostScript, CUPS, Foomatic, and the GIMP
+
+foomatic-db, foomatic-db-engine and foomatic-db-nonfree - Foomatic is a database-driven system for integrating free software printer drivers with common spoolers under Unix.
+
+hplip - HP drivers for DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet printer models, as well as a number of Brother printers.
+
+splix - Samsung drivers for SPL (Samsung Printer Language) printers.
+
+foo2zjs - Drivers for ZjStream protocol printers such as the HP Laserjet 1018. More info here. Package is available in the AUR.
+
+hpoj - If you are using an HP Officejet, you should also install this package and follow the instructions to avoid problems as in this thread. Package is available in the AUR.
+
+samsung-unified-driver - Unified Linux Driver for Samsung printers and scanners. Required for new printers such as the ML-2160. Package is available in the AUR.
+
+cndrvcups-lb - Canon UFR2 driver with support for LBP, iR and MF series printers. Package is available in the AUR.
+
+cups-pdf - A package that allows one to setup a virtual PDF Printer that generates a PDF out of jobs sent to it
+
+If you are not sure of what driver package to install or if the current driver is not working, it may be easiest to just install all of the drivers. Some of the package names are misleading because printers of other makes may rely on them. For example, the Brother HL-2140 needs the hplip driver installed.
+
+###   ############################################
+###     Samsung Xpress M2070w
+###   ############################################
+
+Download the Samsung driver
+
+$   tar -zxvf M2070_Linux_V1.00.06.gz
+$   ./install.sh
+
+
+
