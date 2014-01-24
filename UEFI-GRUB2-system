@@ -87,7 +87,7 @@ $	genfstab -p /mnt >> /mnt/etc/fstab
 
 $	arch-chroot /mnt
 
-7. Make some io file.
+7. Create the initcpio file, which is the initial RAM disk filesystem.
 
 $	mkinitcpio -p linux
 
@@ -231,8 +231,47 @@ $	systemctl enable gdm.service
 
 
 
+###   ############################################
+### E)	Partition examples
+###   ############################################
 
 
+Use GParted live disk for GPT disks.
+
+a) download from http://sourceforge.net/projects/gparted/
+b) then write the .iso to CD or USB.
+c) Documentation http://gparted.org/documentation.php
 
 
+#####
+/boot 512 MB - Set flag bootable 
+#####
+This will be used for thee bootloader GRUB2 or syslinux etc.
+
+#####
+/
+#####
+The main partition where the systemfiles will be stored.
+
+#####
+/home
+#####
+The main partition where the users files are to be stored.
+
+#####
+/swap
+#####
+If the system have more than 8 GB om RAM, this partition is mostly not needed. Can be replaced by a file instead in another partition if skipped, this option is easier to resize also. If this partition is wanted the size is often recomended to be twice as large as the available RAM.
+MBR partition: 	mkswap /dev/sdXY
+			swapon /dev/sdXY
+			swapon -s
+
+#####
+/var 12288 MB
+#####
+This node stores cache files such as logs. Often frequent read and writes. Place this on a disk hard drive to spare the SSD. 
+
+#####
+/tmp
+#####
 
