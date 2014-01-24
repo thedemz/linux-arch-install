@@ -1,0 +1,39 @@
+###   ################################################
+###   sane
+
+      https://wiki.archlinux.org/index.php/Sane
+###   ################################################
+
+$   pacman -S sane
+
+$   pacman -S simple-scan
+
+
+Check if the scanner is detected with correct driver installed.
+
+$   scanimage -L
+
+
+Else check the rules if the scanner is in the list.
+
+$   cd /etc/udev/rules.d/
+$   ls
+>   60_smfp_samsung.rules  99_smfpautoconf.rules
+
+For Samsung hardware
+For some Samsung MFP printers you may need to edit /etc/sane.d/xerox_mfp.conf.
+
+example entry:
+
+#Samsung SCX-3200
+usb 0x04e8 0x3441
+
+#Samsung M2070x Series
+usb 0x04e8 0x3469
+
+Change the printer model as needed.
+
+
+You can get the idVendor and idProduct code with this command.
+
+$   lsusb
