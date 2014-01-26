@@ -185,9 +185,38 @@ $	systemctl enable ntpd.service
 $	systemctl reboot
 
 
+###   #############################################
+### D)	Add a new user.
+###   #############################################
+
+To add a new user, use the useradd command.
+
+# useradd -m -g [initial_group] -G [additional_groups] -s [login_shell] [username]
+
+Adding a user named archie specifying bash as the login shell.
+
+$   useradd -m -s /bin/bash archie
+
+To later add the user to other groups use.
+
+# usermod -aG [additional_groups] [username]
+
+##
+##  Make the user able to use sudo
+##
+
+Install sudo.
+
+$   pacman -S sudo
+
+Use visudo to alter the sudo file /etc/sudoers.
+
+$   visudo
+
+Add the line:   USER_NAME   ALL=(ALL) ALL
 
 ###   ############################################
-### D)	Install X11 server and GNOME Desktop environment
+### E)	Install X11 server and GNOME Desktop environment
 ###   ############################################
 
 
@@ -232,7 +261,7 @@ $	systemctl enable gdm.service
 
 
 ###   ############################################
-### E)	Partition examples
+### F)	Partition examples
 ###   ############################################
 
 
