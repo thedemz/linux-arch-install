@@ -1,0 +1,33 @@
+#####################
+### gnome web browser
+#####################
+
+$   pacman -S epiphany
+
+If you want to save login passwords.
+
+$   pacman -S gnome-keyring
+
+Fix pixelated fonts.
+
+$   ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+
+
+###   ##################
+###   gnome tweak tool
+###   ##################
+
+$   pacman -S gnome-tweak-tool
+
+
+###   ########################
+###   Nice programs to have
+###   ########################
+
+Chromium. A stable web browser.
+
+$   pacman -S chromium
+
+LaTeX editor Gummi. Clean and simple LaTeX editor.
+
+$   pacman -S gummmi
