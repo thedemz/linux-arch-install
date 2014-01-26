@@ -1,0 +1,32 @@
+###   ####################################
+###   ALSA
+###   ####################################
+
+Install alsa utils.
+
+$   pacman -S alsa-utils
+
+$   pacman -S alsa-tools
+
+$   pacman -S alsa-plugins
+
+$   pacman -S libsamplerate
+
+Run alsamixer and unmute the sound.
+
+$   alsamixer
+
+
+###   #####################################
+###   Fix popping sound when resuming from suspension.
+###   #####################################
+
+Edit:
+    /etc/pm/sleep.d/90alsa
+
+Remove the line that says:
+    aplay -d 1 /dev/zero
+
+
+
+
