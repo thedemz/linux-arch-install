@@ -1,0 +1,132 @@
+###   ##########################################
+###   Python 3
+###   ##########################################
+
+$   pacman -S python
+
+Instal pip to get pypi libraries.
+
+$   pacman -S python-pip
+
+Install virtualenv to be able to create project specific environments.
+
+$   pacman -S python-virtualenv
+
+###   ###########################################
+###   Python 2
+###   ###########################################
+
+$   pacman -S python2
+
+Instal pip to get pypi libraries.
+
+$   pacman -S python2-pip
+
+Install virtualenv to be able to create project specific environments.
+
+$   pacman -S python2-virtualenv
+
+
+###   ##########################################
+###   pydoc
+###   ##########################################
+
+Run the pydoc module that is included in the python distribution.
+
+$   python /path/to/pydoc.py -p 1234
+
+Where 1234 is the port you want the server to run at.
+Then visit http://localhost:1234/ and browse the documentation.
+
+
+###   ##########################################
+###   The Python REPL (the command-line interpreter / Read-Eval-Print-Loop)
+###   ##########################################
+
+To see a list of all available libs.
+
+$   help("modules")
+
+To see functions within a module.
+
+$   help("posix")
+
+
+###   #############################################
+###   Modules. Example from Python 3.3.3
+###   #############################################
+
+DROM               array               imaplib             select
+DLFCN               ast                 imghdr              shelve
+IN                  asynchat            imp                 shlex
+TYPES               asyncore            importlib           shutil
+__future__          atexit              inspect             signal
+_ast                audioop             io                  site
+_bisect             base64              ipaddress           smtpd
+_bz2                bdb                 itertools           smtplib
+_codecs             binascii            json                sndhdr
+_codecs_cn          binhex              keyword             socket
+_codecs_hk          bisect              lib2to3             socketserver
+_codecs_iso2022     builtins            libmount            spwd
+_codecs_jp          bz2                 linecache           sqlite3
+_codecs_kr          cProfile            locale              sre_compile
+_codecs_tw          cairo               logging             sre_constants
+_collections        calendar            lzma                sre_parse
+_compat_pickle      cgi                 macpath             ssl
+_crypt              cgitb               macurl2path         stat
+_csv                chunk               mailbox             string
+_ctypes             cmath               mailcap             stringprep
+_ctypes_test        cmd                 marshal             struct
+_curses             code                math                subprocess
+_curses_panel       codecs              mimetypes           sunau
+_datetime           codeop              mmap                symbol
+_dbm                collections         modulefinder        symtable
+_decimal            colorsys            multiprocessing     sys
+_dummy_thread       compileall          netrc               sysconfig
+_elementtree        concurrent          nis                 syslog
+_functools          configparser        nntplib             systemd
+_gdbm               contextlib          ntpath              tabnanny
+_hashlib            copy                nturl2path          tarfile
+_heapq              copyreg             numbers             telnetlib
+_imp                crypt               opcode              tempfile
+_io                 csv                 operator            termios
+_json               ctypes              optparse            test
+_locale             curses              os                  textwrap
+_lsprof             datetime            os2emxpath          this
+_lzma               dbm                 ossaudiodev         threading
+_markupbase         decimal             parser              time
+_md5                difflib             pdb                 timeit
+_multibytecodec     dis                 pickle              tkinter
+_multiprocessing    distutils           pickletools         token
+_osx_support        doctest             pipes               tokenize
+_pickle             dummy_threading     pkgutil             trace
+_posixsubprocess    email               platform            traceback
+_pyio               encodings           plistlib            tty
+_random             errno               poplib              turtle
+_sha1               faulthandler        posix               turtledemo
+_sha256             fcntl               posixpath           types
+_sha512             filecmp             pprint              unicodedata
+_socket             fileinput           profile             unittest
+_sqlite3            fnmatch             pstats              urllib
+_sre                formatter           pty                 uu
+_ssl                fractions           pwd                 uuid
+_string             ftplib              py_compile          venv
+_strptime           functools           pyclbr              warnings
+_struct             gc                  pydoc               wave
+_symtable           genericpath         pydoc_data          weakref
+_sysconfigdata      getopt              pyexpat             webbrowser
+_testbuffer         getpass             pygtkcompat         wsgiref
+_testcapi           gettext             queue               xcbgen
+_thread             gi                  quopri              xdg
+_threading_local    glob                random              xdrlib
+_tkinter            grp                 re                  xml
+_warnings           gzip                readline            xmlrpc
+_weakref            hashlib             recipe-440501-1     xxlimited
+_weakrefset         heapq               reprlib             xxsubtype
+abc                 hmac                resource            zipfile
+aifc                html                rlcompleter         zipimport
+antigravity         http                runpy               zlib
+argparse            idlelib             sched
+
+
+
