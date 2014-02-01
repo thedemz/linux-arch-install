@@ -10,9 +10,19 @@
 $   pacman -S git
 
 
-#
-#   Clone a repository.
-#
+1. Set the default name for git to use when you commit
+
+$   git config --global user.name "Your Name Here"
+
+2. Set the default email for git to use when you commit
+
+$   git config --global user.email "your_email@example.com"
+
+
+
+### ###########################################
+### Clone a repository.
+### ###########################################
 
 
 #   git clone [repository-url] [save-directory]
@@ -21,10 +31,35 @@ Example:
 $   git clone https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
 
 
-#
-#   Create a new repository that is only used remotely.
-#
+### ###########################################
+### Create a new repository
+### ###########################################
 
+This repository is only used remotely or locally. Its a bare repository only used to store.
+ 
 $   git init --bare
+
+
+### ###########################################
+### Push to git hub
+### ###########################################
+
+1. Create a remote named "origin" pointing at your GitHub repository
+
+$   git remote add origin https://github.com/username/Hello-World.git
+
+2. Send your commits in the "master" branch to GitHub
+
+$   git push origin master
+
+
+
+
+
+
+
+
+
+
 
 
