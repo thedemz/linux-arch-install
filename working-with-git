@@ -1,11 +1,10 @@
- working-with-git                                                                                           < buffers 
-###   ####################################
-###   git
-###   ####################################
+### ####################################
+### git
+### ####################################
 
-#
-#   Install.
-#
+### #################################### 
+### Install
+### ####################################
 
 $   pacman -S git
 
@@ -30,6 +29,7 @@ $   git config --global user.email "your_email@example.com"
 Example:
 $   git clone https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
 
+This will set remote origin to the cloned URL
 
 ### ###########################################
 ### Create a new repository
