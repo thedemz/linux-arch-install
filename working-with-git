@@ -1,0 +1,30 @@
+ working-with-git                                                                                           < buffers 
+###   ####################################
+###   git
+###   ####################################
+
+#
+#   Install.
+#
+
+$   pacman -S git
+
+
+#
+#   Clone a repository.
+#
+
+
+#   git clone [repository-url] [save-directory]
+
+Example:
+$   git clone https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
+
+
+#
+#   Create a new repository that is only used remotely.
+#
+
+$   git init --bare
+
+
