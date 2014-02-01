@@ -1,0 +1,63 @@
+ working-with-vim                                                                                           < buffers 
+###   ###################################
+###   Vim
+###   ###################################
+
+###   #####################################
+###   pathogen.vim 
+###   #####################################
+
+Makes it super easy to install plugins and runtime files in their own private directories.
+
+Add this to your vimrc:
+
+    call pathogen#infect()
+    syntax on
+    filetype plugin indent on
+
+
+Now any plugins you wish to install can be extracted to a subdirectory under ~/.vim/bundle, and they will be added to the 'runtimepath'.
+
+Use :Helptags to run :helptags on every doc/ directory in your 'runtimepath'.
+
+GitHub: http://github.com/tpope/vim-pathogen
+
+Install in ~/.vim/autoload
+
+$   mkdir -p ~/.vim/autoload ~/.vim/bundle
+
+$   curl -Sso ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+
+
+###   ######################################
+###   airline
+###   ######################################
+
+Lean & mean status/tabline for vim
+
+$   git clone https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
+
+
+###   ######################################
+###   solarized
+###   ######################################
+
+Nice color schemes for vim.
+
+$   cd ~/.vim/bundle
+$   git clone git://github.com/altercation/vim-colors-solarized.git
+
+Edit .vimrc
+
+    syntax enable
+    set background=dark
+    colorscheme solarized
+
+or, for the light background mode of Solarized:
+
+    syntax enable
+    set background=light
+    colorscheme solarized
+
+
+
