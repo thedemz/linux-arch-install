@@ -1,0 +1,75 @@
+hjkl    - move around
+
+i       - insert mode
+<ESC>   - command mode
+
+A       - insert mode cursor last on line
+I       - insert mode cursor first on line
+
+O       - insert mode new line above
+o       - insert mode new line under
+
+
+u       - undo
+<Ctrl>r - redo
+
+x       - delete
+dd      - delete row
+
+
+
+:q[uit]     - quit vim
+:q[uit]!    - quit without writing
+:cq[uit]    - quit without writing
+
+:wq         - write current file and exit
+:wq!        - write current file and exit always
+
+:wq {file}  - write to {file} and exit
+:wq! {file} - write to {file} and exit always
+
+:[range]wq[!][file] - only write the lines in [range]
+
+ZZ  - write current file, if modified, and exit
+ZQ  - quit current file and exit (same as :q! )
+
+
+
+
+### Editing a File
+
+:e[dit]     - Edit the current file. This is useful to re-edit the current file, when it has been changed outside of Vim.
+:e[dit]!    - Edit the current file always. Discard any changes to the current buffer. This is useful if you want to start all over again.
+
+:e[dit] {file}  -   Edit {file}.
+:e[dit]! {file} -   Edit {file} always. Discard any changes to the current buffer.
+
+gf          - Edit the file whose name is under or after the cursor. Mnemonic: "goto file".
+
+
+### Inserting Text
+
+a   - Append text after the cursor [count] times.
+A   - Append text at the end of the line [count] times.
+i   - Insert text before the cursor [count] times.
+I   - Insert text before the first non-blank in the line [count] times.
+gI  - Insert text in column 1 [count] times.
+o   - Begin a new line below the cursor and insert text, repeat [count] times.
+O   - Begin a new line above the cursor and insert text, repeat [count] times.
+
+
+### Inserting a file
+
+:r[ead] [name]  - Insert the file [name] below the cursor
+:r[ead] !{cmd}  - Execute {cmd} and insert its standard output below the cursor
+
+
+### Deleteing Text
+
+
+x   - Delete [count] characters before the cursor
+X   - Delete [count] characters before the cursor
+
+dd  - Delete [count] lines
+D   - Delete the characters under the cursor until the end of the line
+
