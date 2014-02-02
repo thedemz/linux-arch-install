@@ -83,6 +83,13 @@ $	pacstrap /mnt grub-efi-x86_64
 
 $	genfstab -p /mnt >> /mnt/etc/fstab
 
+5X. If there is an SSD then add the discard option to /mnt/etc/fstab
+	
+$   nano /mnt/etc/fstab
+
+>   /dev/sda1  /       ext4   defaults,noatime,discard   0  1
+>   /dev/sda2  /home   ext4   defaults,noatime,discard   0  2
+	
 6. Change to arch on the storage partition as root user.
 
 $	arch-chroot /mnt
