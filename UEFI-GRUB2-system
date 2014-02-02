@@ -304,3 +304,65 @@ This node stores cache files such as logs. Often frequent read and writes. Place
 /tmp
 #####
 
+
+
+###   ############################################
+### E)	SSD - Solid State Disk
+###   ############################################
+
+A Trim command (commonly typeset as TRIM) allows an operating system to inform a solid-state drive (SSD)
+which blocks of data are no longer considered in use and can be wiped internally.
+
+Most SSDs support the ATA_TRIM command for sustained long-term performance and wear-leveling.
+
+As of linux kernel version 3.7, the following filesystems support TRIM:
+
+    Ext4
+    Btrfs
+    JFS
+    XFS
+
+
+Using partitions that are aligned with the erase block size is highly recommended.
+In past, this required manual calculation and intervention when partitioning.
+
+Many of the common partition tools handle partition alignment automatically
+(assuming users are using an up-to-date version):
+
+    fdisk
+    gdisk
+    gparted
+    parted
+
+
+1. Verify a partition is aligned, query it using /usr/bin/blockdev as shown below
+
+if a '0' is returned, the partition is aligned:
+
+$   blockdev --getalignoff /dev/sdX
+
+>   0
+
+
+2. Verify TRIM Support
+
+$   hdparm -I /dev/sda | grep TRIM
+
+>   Data Set Management TRIM supported (limit 1 block)
+>   Deterministic read data after TRIM
+
+The output could be limit 1 block or limit 8 block
+
+3. Enable TRIM by Mount Flags
+
+Using this flag in one's /etc/fstab enables the benefits of the TRIM command
+
+Edit /etc/fstab and add the discard option for the SDD partitions:
+
+>   /dev/sda1  /       ext4   defaults,noatime,discard   0  1
+>   /dev/sda2  /home   ext4   defaults,noatime,discard   0  2
+
+
+4. Check that the SSD have the latest firmware to further improve the lifetime of the storage media.
+
+
