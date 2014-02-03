@@ -1,274 +1,310 @@
 ############################################
 ###   Installing a Arch Linux System
 
-	UEFI Motherboard
-	64 bit x86 CPU
-	Normal spinning disk	
-	GPT Partition
-	GRUB 2
-	GNOME 3
-	Wired connection
-	
+    UEFI Motherboard
+    64 bit x86 CPU
+    Normal spinning disk    
+    GPT Partition
+    GRUB 2
+    GNOME 3
+    Wired connection
+    
 ############################################
 
 ###   ######################################
-### A)	Setting upp storage partitions
+### A)  Setting upp storage partitions
 ###   ######################################
 
 ##
 ## Check what kind of boot method the motherboard supports.
 ##
 
-	##Master Boot Record, MBR
-	The old BIOS boot table, pre 2013 motherboards.
+    ##Master Boot Record, MBR
+    The old BIOS boot table, pre 2013 motherboards.
 
-	##GUID Partition Table, GPT
-	UEFI, post 2014 motherboards.
+    ##GUID Partition Table, GPT
+    UEFI, post 2014 motherboards.
 
-	Check with the command:
+    Check with the command:
 
-$	efivar -l
+$   efivar -l
 
-	In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel.
-	If efivar lists the uefi variables properly, then you have booted in UEFI mode.
+    In case you have a UEFI motherboard and UEFI Boot mode is enabled
+    the CD/USB will automatically launch Arch Linux kernel.
+    If efivar lists the uefi variables properly, then you have booted in UEFI mode.
 
 ##
 ## Partition the storage media.
 ##
 
-	Use GNUParted Live, CD or USB.
+    Use GNUParted Live, CD or USB.
 
-	In advanced settings choose GPT and make the storage use GPT.
+    In advanced settings choose GPT and make the storage use GPT.
 
-	*This is a basic partition scheme* More advanced partitions using swap partitions and other filesystems like btrfs can be set up.
+    *This is a basic partition scheme* More advanced partitions using swap partitions and other filesystems like btrfs can be set up.
 
-	sda1 - FAT32 partition - 512 MB
-	==== - Make 1 MB of spare space for security reasons
-	sda2 - Ext4 - Can be the rest of the space
-	==== - Make 512 MB of spare space for security reasons
+    sda1 - FAT32 partition - 512 MB
+    ==== - Make 1 MB of spare space for security reasons
+    sda2 - Ext4 - Can be the rest of the space
+    ==== - Make 512 MB of spare space for security reasons
 
-	Do the partitioning.
+    Do the partitioning.
 
-	Set the FAT32 to have the flag "boot"
+    Set the FAT32 to have the flag "boot"
 
 
 ###   ######################################
-### B)	Installing Arch
+### B)  Installing Arch
 ###   ######################################
 
 1. Show the storage medias. Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
-	
-$	fdisk -l
+    
+$   fdisk -l
 
 2. Mount the partitions. First the main storage partition then the boot partition.
 
-$	mount /dev/sda2 /mnt
+$   mount /dev/sda2 /mnt
 
-$	mkdir /mnt/boot
-$	mkdir /mnt/boot/efi
+$   mkdir /mnt/boot
+$   mkdir /mnt/boot/efi
 
-$	mount /dev/sda1 /mnt/boot/efi
+$   mount /dev/sda1 /mnt/boot/efi
 
 3. Check that there is an internet connection.
 
-$	ping -c 3 www.google.com
+$   ping -c 3 www.google.com
 
 4. Dowload the base installation on the storage partition.
 
-$	pacstrap /mtn base
+$   pacstrap /mtn base
 
-$	pacstrap /mnt grub-efi-x86_64
+$   pacstrap /mnt grub-efi-x86_64
 
 5. Create a file system table.
 
-$	genfstab -p /mnt >> /mnt/etc/fstab
+$   genfstab -p /mnt >> /mnt/etc/fstab
 
 5X. If there is an SSD then add the discard option to /mnt/etc/fstab
-	
+    
 $   nano /mnt/etc/fstab
 
 >   /dev/sda1  /       ext4   defaults,noatime,discard   0  1
 >   /dev/sda2  /home   ext4   defaults,noatime,discard   0  2
-	
+    
 6. Change to arch on the storage partition as root user.
 
-$	arch-chroot /mnt
+$   arch-chroot /mnt
 
 7. Create the initcpio file, which is the initial RAM disk filesystem.
 
-$	mkinitcpio -p linux
+$   mkinitcpio -p linux
 
 8. Make a grub config file.
 
-   	*To fix an error*
+    *To fix an error*
 
-$	nano /etc/default/grub
+$   nano /etc/default/grub
 
-	Add the line at the end of the file
+    Add the line at the end of the file
 
->	GRUB_DISABLE_SUBMENU=y
+>   GRUB_DISABLE_SUBMENU=y
 
-$	grub-mkconfig -o /boot/grub/grub.cfg
+$   grub-mkconfig -o /boot/grub/grub.cfg
 
 9. Install GRUB 2 boot loader
 
-$	mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+$   mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 
-$	pacman -S grub efibootmgr
+$   pacman -S grub efibootmgr
 
-$	grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
+$   grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
 
+>   Installation finished. No error reported
 
 10. Set a password for the root.
 
-$	passwd
+$   passwd
 
 11. Exit the arch-root user.
 
-$	exit
+$   exit
 
 12. Unmount the storage media.
 
-$	umount -R /mnt/boot/efi /mnt
+$   umount -R /mnt/boot/efi /mnt
 
 13. Reboot the computer with the systemd command.
 
-$	systemctl reboot
+$   systemctl reboot
 
 
 ###   ############################################
-### C)	Configure the installed Arch system
+### C)  Configure the installed Arch system
 ###   ############################################
 
 1. Set a hostname with sytemd. The name of the computer in this example it is set to box.
 
-$	hostnamectl set-hostname box
+$   hostnamectl set-hostname box
 
 2. Find the right timezone.
 
-$ 	cd /usr/share/zoneinfo
-$	ls -al
+$   cd /usr/share/zoneinfo
+$   ls -al
 
-	This list available zones and each have subzones
+    This list available zones and each have subzones
 
 3. Set the timezone. In this example the zone is US and the subzone is Pacific.
 
-$	timedatectl set-timezone US/pacific
+$   timedatectl set-timezone US/Pacific
+
+#   Europe/Stockholm
 
 4. Set the locale. The info about the language and keyboardlayout to be used.
 
-$	vi	/etc/loacale.gen
+$   vi  /etc/locale.gen
 
-	Uncomment the two lines corresponding to the encoding and the language to used. Remove the #. In this example the encoding is UTF-8 and the language is en_US.
+    Uncomment the lines corresponding to the encoding and the language that can be used on the system.
+    In this example the encoding is UTF-8 and the language is en_US.
 
-$	locale-gen
+$   locale-gen
 
-$ 	localectl set-locale LANG="en_US.UTF-8"
+$   localectl set-locale LANG="en_US.UTF-8"
 
 5. Find available internet interfaces. This can be shown like eth0, enp2s0 or something else.
 
-$	ls /sys/class/net
+$   ls /sys/class/net
 
 6. Start the wired connection. In this example the internet interface was named enp2s0.
 
-$	dhcpcd enp2s0
+$   dhcpcd enp2s0
 
-$	ping -c 3 www.google.com
+$   ping -c 3 www.google.com
 
 7. Make the wired connection start at boot with systemd. In this example the internet interface was named enp2s0.
 
-$	systemctl enable dhcpcd@enp2s0.service
+$   systemctl enable dhcpcd@enp2s0.service
 
-$	systemctl start dhcpcd@enp2s0.service
+$   systemctl start dhcpcd@enp2s0.service
 
 8. Install NTP to get the correct time from the internet.
 
-$	pacman -S ntp
+$   pacman -S ntp
 
-$	systemctl enable ntpd.service
+$   systemctl enable ntpd.service
 
 9. Reboot the system
 
-$	systemctl reboot
+$   systemctl reboot
 
 
 ###   #############################################
-### D)	Add a new user.
+### D)  Add a new user.
 ###   #############################################
 
 To add a new user, use the useradd command.
 
-# useradd -m -g [initial_group] -G [additional_groups] -s [login_shell] [username]
+#    useradd -m -g [initial_group] -G [additional_groups] -s [login_shell] [username]
 
-Adding a user named archie specifying bash as the login shell.
+1. Adding a user named archie specifying bash as the login shell.
 
 $   useradd -m -s /bin/bash archie
 
 To later add the user to other groups use.
 
-# usermod -aG [additional_groups] [username]
+#    usermod -aG [additional_groups] [username]
 
-##
-##  Make the user able to use sudo
-##
+### ###############################################
+### Make the user able to use sudo
+### ###############################################
 
-Install sudo.
+1. Install sudo.
 
 $   pacman -S sudo
 
-Use visudo to alter the sudo file /etc/sudoers.
+2. Use visudo to alter the sudo file /etc/sudoers.
 
 $   visudo
 
-Add the line:   USER_NAME   ALL=(ALL) ALL
+    Add the line:
+
+>   USER_NAME   ALL=(ALL) ALL
 
 ###   ############################################
-### E)	Install X11 server and GNOME Desktop environment
+### E)  Install X11 server and GNOME Desktop environment
 ###   ############################################
 
+1. Install X.
+
+$   pacman -S xorg-server-utils xorg-xinit
+
+2. Install mesa graphics driver.
+
+$   pacman -S mesa
+
+3. Check available video cards.
+
+$   lspci | grep VGA
+
+4. Show a list of available drivers.
+
+$   pacman -Ss xf86-video | less
+
+5. Install vesa driver and intel driver.
+
+$   pacman -S xf86-video-vesa
+
+$   pacman -S xf86-video-intel
+
+6.  Install some basic X applications.
+
+$   pacman -S xorg-twm xorg-xclock xterm
+
+7X. If Xorg was installed before creating the non-root user
+    there will be a template .xinitrc file in your home directory
+    that needs to be either deleted or commented out.
+
+$   rm ~/.xinitrc
+
+7. Test the X11 environment
+
+$   startx
+
+$   exit
+
+7X. If exit doesnt work try
+
+$   pkill X
+$   reboot
+
+8. Install Gnome 3 desktop environment.
+
+$   pacman -S gdm gnome-shell gnome-control-center gnome-tweak-tool
+
+$   systemctl enable gdm.service
+
+$   systemctl start gdm.service
 
 
-$	pacman -S xorg-server-utils xorg-xinit
 
-$	pacman -S mesa
+### ##############################################
+### Install web browser and get info files
+### ##############################################
 
-$	lspci | grep VGA
+1. Install gnome web browser.
 
-$	pacman -Ss xf86-video | less
+$   pacman -S epiphany
 
-$ 	pacman -S xf86-video-vesa
+2. Install git and vim.
 
-$	pacman -S xf86-video-intel
+$   pacman -S git vim
 
-$	pacman -S xorg-twm xorg-xclock xterm
+3. Get the linux-arch-install repository
 
-	*If Xorg was installed before creating the non-root user, there will be a template .xinitrc file in your home directory that needs to be either deleted or commented out.*
-
-$	rm ~/.xinitrc
-
-	Test the X11 environment
-
-$	startx
-
-$	exit
-$	pkill X
-$	reboot
-
-$	pacman -S gdm gnome-shell
-
-$	systemctl enable gdm.service
-
-
-
-
-
-
-
-
-
+$   cd
+$   git clone https://github.com/thedemz/linux-arch-install
 
 ###   ############################################
-### F)	Partition examples
+### F)  Partition examples
 ###   ############################################
 
 
@@ -298,9 +334,9 @@ The main partition where the users files are to be stored.
 /swap
 #####
 If the system have more than 8 GB om RAM, this partition is mostly not needed. Can be replaced by a file instead in another partition if skipped, this option is easier to resize also. If this partition is wanted the size is often recomended to be twice as large as the available RAM.
-MBR partition: 	mkswap /dev/sdXY
-			swapon /dev/sdXY
-			swapon -s
+MBR partition:  mkswap /dev/sdXY
+            swapon /dev/sdXY
+            swapon -s
 
 #####
 /var 12288 MB
@@ -314,7 +350,7 @@ This node stores cache files such as logs. Often frequent read and writes. Place
 
 
 ###   ############################################
-### E)	SSD - Solid State Disk
+### E)  SSD - Solid State Disk
 ###   ############################################
 
 A Trim command (commonly typeset as TRIM) allows an operating system to inform a solid-state drive (SSD)
