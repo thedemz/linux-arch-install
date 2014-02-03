@@ -1,4 +1,3 @@
- working-with-vim                                                                                           < buffers 
 ###   ###################################
 ###   Vim
 ###   ###################################
@@ -11,9 +10,9 @@ Makes it super easy to install plugins and runtime files in their own private di
 
 Add this to your vimrc:
 
-    call pathogen#infect()
-    syntax on
-    filetype plugin indent on
+>    call pathogen#infect()
+>    syntax on
+>    filetype plugin indent on
 
 
 Now any plugins you wish to install can be extracted to a subdirectory under ~/.vim/bundle, and they will be added to the 'runtimepath'.
@@ -49,15 +48,15 @@ $   git clone git://github.com/altercation/vim-colors-solarized.git
 
 Edit .vimrc
 
-    syntax enable
-    set background=dark
-    colorscheme solarized
+>    syntax enable
+>    set background=dark
+>    colorscheme solarized
 
 or, for the light background mode of Solarized:
 
-    syntax enable
-    set background=light
-    colorscheme solarized
+>    syntax enable
+>    set background=light
+>    colorscheme solarized
 
 
 ###   #######################################
