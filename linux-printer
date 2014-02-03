@@ -1,6 +1,6 @@
-###   ###########################################
-###   CUPS - Common Unix Printing System
-###   ###########################################
+### ###########################################
+### CUPS - Common Unix Printing System
+### ###########################################
 
 *There are other printing packages such as LPRNG
 
@@ -10,9 +10,9 @@ $   systemctl enable cups
 
 $   systemctl start cups
 
-###   ###########################################
-###   Printer drivers
-###   ###########################################
+### ###########################################
+### Printer drivers
+### ###########################################
 
 Choosing the right driver depends on the printer!
 
@@ -38,14 +38,109 @@ cups-pdf - A package that allows one to setup a virtual PDF Printer that generat
 
 If you are not sure of what driver package to install or if the current driver is not working, it may be easiest to just install all of the drivers. Some of the package names are misleading because printers of other makes may rely on them. For example, the Brother HL-2140 needs the hplip driver installed.
 
-###   ############################################
-###     Samsung Xpress M2070w
-###   ############################################
+### ############################################
+### Samsung Xpress M2070w
+### ############################################
 
 Download the Samsung driver
 
+$   wget http://www.bchemnet.com/suldr/driver/UnifiedLinuxDriver-1.00.06.tar.gz
+
+or
+
+$   wget http://org.downloadcenter.samsung.com/downloadfile/ContentsFile.aspx?CDSite=UNI_DE&CttFileID=5506927&CDCttType=DR&ModelType=N&ModelName=SL-M2070W&VPath=DR/201307/20130726185233290/M2070_Linux_V1.00.06.gz
+
 $   tar -zxvf M2070_Linux_V1.00.06.gz
+
 $   ./install.sh
 
+### ###############################################
+### List the devices
+### ###############################################
+
+$   lpinfo -v
+
+List the drivers
+
+$   lpinfo -m
+
+### ##############################################
+### Add a new printer
+### ##############################################
+
+#   lpadmin -p printer -E -v device -P ppd
+
+#   Samsung M2070x Series
+
+$   lpadmin -p Samsung-M2070w -E -v "usb://Samsung/M2070%20Series?serial=ZF44B8KD9E007YV&interface=1" -P /usr/share/ppd/uld-samsung/Samsung_M2070_Series.ppd
+
+### ###############################################
+### Set the default printer
+### ###############################################
+
+$ lpoptions -d printer
+
+Check the status
+
+$ lpstat -s
+
+# lpstat -p printer
+
+### ###############################################
+### Print a file
+### ###############################################
+
+$   lpr file
+$   lpr -# 17 file              # print the file 17 times
+$   echo "Hello, world!" | lpr -p # print the result of a command. The -p switch adds a header.
+
+Check the printing queue
+
+$   lpq
+
+# on all printers
+
+$   lpq -a 
+
+Clear the printing queue
+
+# remove last entry only
+
+$   lprm
+
+# remove all entries
+
+$   lprm - 
+
+### ####################################################################
+### Gnome
+### ####################################################################
+
+You can configure and manage printers by installing system-config-printer.
+
+$   pacman -S system-config-printer
+
+This program does pull in some gnome dependencies.
+
+If your user does not have sufficient priviliges to administer the cups scheduler, system-config-printer will request the root password when it starts. You can avoid this by performing the following instructions.
+
+1. Create a group for administering the cups scheduler:
+
+$    groupadd lpadmin
+
+2. Add yourself to the newly created group:
+
+$   usermod -aG lpadmin username
+
+3. Tell cups to respect the newly created group:
+
+$   /etc/cups/cups-files.conf
+>   SystemGroup sys root lpadmin
+
+4. Restart cups:
+
+$   systemctl restart cupsd
+
+5. Log out and log in again or restart your computer.
 
 
