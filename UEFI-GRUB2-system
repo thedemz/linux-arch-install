@@ -11,51 +11,62 @@
     
 ############################################
 
-###   ######################################
-### A)  Setting upp storage partitions
-###   ######################################
+### ######################################
+#A# Setting upp storage partitions
+### ######################################
 
-##
-## Check what kind of boot method the motherboard supports.
-##
+### ######################################
+### Check supported boot methods.
+    
+    Check if the motherboard supports UEFI.
 
-    ##Master Boot Record, MBR
+### ######################################
+
+#   Master Boot Record, MBR
     The old BIOS boot table, pre 2013 motherboards.
 
-    ##GUID Partition Table, GPT
+
+#   GUID Partition Table, GPT
     UEFI, post 2014 motherboards.
 
-    Check with the command:
+1,  Check UEFI support.
 
 $   efivar -l
 
-    In case you have a UEFI motherboard and UEFI Boot mode is enabled
-    the CD/USB will automatically launch Arch Linux kernel.
-    If efivar lists the uefi variables properly, then you have booted in UEFI mode.
+If efivar lists the uefi variables properly, then you have booted in UEFI mode.
+Thus UEFI is supported.
 
-##
-## Partition the storage media.
-##
+    #Note:  In case you have a UEFI motherboard and UEFI Boot mode is enabled
+    #       the live CD or USB will automatically launch Arch Linux kernel.
 
-    Use GNUParted Live, CD or USB.
 
-    In advanced settings choose GPT and make the storage use GPT.
+### ######################################
+### Partition the storage media.
+### ######################################
 
-    *This is a basic partition scheme* More advanced partitions using swap partitions and other filesystems like btrfs can be set up.
+    Use GNUParted Live CD or USB.
 
-    sda1 - FAT32 partition - 512 MB
+1. In advanced settings choose GPT and make the storage use GPT.
+
+2. Manage the partition scheme.
+
+    #Note:  This is a basic partition scheme:
+    
+    sdX1 @ FAT32 partition - 512 MB
     ==== - Make 1 MB of spare space for security reasons
-    sda2 - Ext4 - Can be the rest of the space
-    ==== - Make 512 MB of spare space for security reasons
+    sdX2 @ Ext4 - Can be the rest of the space
+    ==== - Make 1 MB of spare space for security reasons
+    
+    #Note:  More advanced partitions using swap partitions and other filesystems like btrfs can be set up.
 
-    Do the partitioning.
+4. Do the partitioning.
 
-    Set the FAT32 to have the flag "boot"
+5. Set the FAT32 to have the flag "boot"
 
 
-###   ######################################
-### B)  Installing Arch
-###   ######################################
+### ######################################
+#B# Installing Arch
+### ######################################
 
 1. Show the storage medias. Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
     
@@ -101,11 +112,11 @@ $   mkinitcpio -p linux
 
 8. Make a grub config file.
 
-    *To fix an error*
+    #Note:  To fix an error.
 
 $   nano /etc/default/grub
 
-    Add the line at the end of the file
+    #Note:  Add the line at the end of the file.
 
 >   GRUB_DISABLE_SUBMENU=y
 
@@ -118,6 +129,8 @@ $   mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 $   pacman -S grub efibootmgr
 
 $   grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
+
+    #Note:  If success this is the output.
 
 >   Installation finished. No error reported
 
@@ -138,9 +151,9 @@ $   umount -R /mnt/boot/efi /mnt
 $   systemctl reboot
 
 
-###   ############################################
-### C)  Configure the installed Arch system
-###   ############################################
+### ############################################
+#C# Configure the installed Arch system
+### ############################################
 
 1. Set a hostname with sytemd. The name of the computer in this example it is set to box.
 
@@ -151,13 +164,13 @@ $   hostnamectl set-hostname box
 $   cd /usr/share/zoneinfo
 $   ls -al
 
-    This list available zones and each have subzones
+    #Note: This lists available zones and each have subzones.
 
 3. Set the timezone. In this example the zone is US and the subzone is Pacific.
 
 $   timedatectl set-timezone US/Pacific
 
-#   Europe/Stockholm
+    #Note: Europe/Stockholm
 
 4. Set the locale. The info about the language and keyboardlayout to be used.
 
@@ -171,6 +184,8 @@ $   locale-gen
 $   localectl set-locale LANG="en_US.UTF-8"
 
 5. Find available internet interfaces. This can be shown like eth0, enp2s0 or something else.
+
+    #Note: This changes if there is another PCI express card added or removed.
 
 $   ls /sys/class/net
 
@@ -197,21 +212,19 @@ $   systemctl enable ntpd.service
 $   systemctl reboot
 
 
-###   #############################################
-### D)  Add a new user.
-###   #############################################
+### #############################################
+#D# Add a new user
+### #############################################
 
-To add a new user, use the useradd command.
-
-#    useradd -m -g [initial_group] -G [additional_groups] -s [login_shell] [username]
+    #Note:  To add a new user, use the useradd command.
+    #       useradd -m -g [initial_group] -G [additional_groups] -s [login_shell] [username]
 
 1. Adding a user named archie specifying bash as the login shell.
 
 $   useradd -m -s /bin/bash archie
 
-To later add the user to other groups use.
-
-#    usermod -aG [additional_groups] [username]
+    #Note:  To later add the user to other groups use.
+    #       usermod -aG [additional_groups] [username]
 
 ### ###############################################
 ### Make the user able to use sudo
@@ -225,13 +238,17 @@ $   pacman -S sudo
 
 $   visudo
 
-    Add the line:
+    #Note: Add the line. Where USER_NAME is the name of the user.
 
 >   USER_NAME   ALL=(ALL) ALL
 
-###   ############################################
-### E)  Install X11 server and GNOME Desktop environment
-###   ############################################
+### ############################################
+#E# Install graphical interfaces
+
+    X11 server
+    GNOME Desktop environment
+
+### ############################################
 
 1. Install X.
 
@@ -303,9 +320,10 @@ $   pacman -S git vim
 $   cd
 $   git clone https://github.com/thedemz/linux-arch-install
 
-###   ############################################
-### F)  Partition examples
-###   ############################################
+
+### ############################################
+#F# Partition examples
+### ############################################
 
 
 Use GParted live disk for GPT disks.
@@ -349,9 +367,9 @@ This node stores cache files such as logs. Often frequent read and writes. Place
 
 
 
-###   ############################################
-### E)  SSD - Solid State Disk
-###   ############################################
+### ############################################
+#G# SSD - Solid State Disk
+### ############################################
 
 A Trim command (commonly typeset as TRIM) allows an operating system to inform a solid-state drive (SSD)
 which blocks of data are no longer considered in use and can be wiped internally.
