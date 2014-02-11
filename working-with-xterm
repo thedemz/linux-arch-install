@@ -1,0 +1,13 @@
+The basic terminal is xterm.
+
+
+Xresources can be edited to get other colors and mutch more.
+
+    .Xresources
+
+
+XTerm Control Sequence:
+    
+    http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+
+

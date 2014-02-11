@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+#
+# Refreshes the Xresources file and then prints the colors.
+# Must start a new xterm to load the new settings.
+#
+
+xrdb -merge ./Xresources
+
+(x=`tput op` y=`printf %76s`;for i in {0..8};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)
+
+
