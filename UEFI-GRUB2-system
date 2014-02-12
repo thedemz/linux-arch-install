@@ -111,6 +111,7 @@ $   nano /mnt/etc/fstab
 >   /dev/sda2  /home   ext4   defaults,noatime,discard   0  2
     
     #Note:  The last column (6) defines if the fsck should check the system.
+    #       By default, fsck checks a filesystem every 30 boots (counted individually for each partition).
     #       0 = Do not check
     #       1 = The first partition to check, the root partition should be set to this.
     #       2 = Check this partition, this is not the root partition.
@@ -549,6 +550,17 @@ $   tune2fs -j /dev/<partition>
 $   fsck -p /dev/<partition>
 
 
+### ##########################################################
+#J# Tips
+### ##########################################################
 
+Changing the fsck check frequency to 20
 
+$   tune2fs -c 20 /dev/sda1
 
+    #Note:  In this example, 20 is the number of boots between two checks.
+    #       If set to 1 makes it scan at every boot, while 0 would stop scanning altogether.
+
+To see the frequency number and the current mount count for a specific partition
+
+$   dumpe2fs -h /dev/sda1 | grep -i 'mount count'
