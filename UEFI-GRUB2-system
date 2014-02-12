@@ -510,3 +510,45 @@ Like the grub.cfg file, they are not intended to be edited, save custom edits fo
 
 
 
+
+
+### ###########################################################
+#I# Troubleshooting
+### ############################################################
+
+?   Can not run fsck on a separate /usr partition
+
+1. Make sure you have the required hooks in
+
+/etc/mkinitcpio.conf
+
+   #Note: Remembered to re-generate your initramfs image after editing this file.
+
+2. Check your fstab file!
+
+    #Note:  Only the root partition needs "1" at the end.
+    #       Everything else should have either "2" or "0".
+    
+    
+?   There are times (due to power failure) in which an ext(3/4) file system can corrupt beyond normal repair.
+?   Normally, there will be a prompt from fsck indicating that it cannot find an external journal.
+
+1. Unmount the partition based on its directory
+
+$   umount <directory>
+
+    #Note:  finde the mounted partitions and their directories with
+    #$      #TODO
+    
+2. Write a new journal to the partition
+
+$   tune2fs -j /dev/<partition>
+
+3. Run an fsck to repair the partition
+
+$   fsck -p /dev/<partition>
+
+
+
+
+
