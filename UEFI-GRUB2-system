@@ -81,6 +81,9 @@ $   mkdir /mnt/boot/efi
 
 $   mount /dev/sda1 /mnt/boot/efi
 
+    #Note:  for BIOS system mount the boot like, the efi folder is just a standard for UEFI.
+    #$      mount /dev/sda1 /mnt/boot
+    
 3. Check that there is an internet connection.
 
 $   ping -c 3 www.google.com
@@ -89,8 +92,13 @@ $   ping -c 3 www.google.com
 
 $   pacstrap /mtn base
 
+    #Note:  It is actually Grub2 that is installed.
+    
 $   pacstrap /mnt grub-efi-x86_64
 
+    #Note:  For BIOS system the command for grub is
+    #$      pacstrap /mnt grub
+    
 5. Create a file system table.
 
 $   genfstab -p /mnt >> /mnt/etc/fstab
@@ -101,6 +109,11 @@ $   nano /mnt/etc/fstab
 
 >   /dev/sda1  /       ext4   defaults,noatime,discard   0  1
 >   /dev/sda2  /home   ext4   defaults,noatime,discard   0  2
+    
+    #Note:  The last column (6) defines if the fsck should check the system.
+    #       0 = Do not check
+    #       1 = The first partition to check, the root partition should be set to this.
+    #       2 = Check this partition, this is not the root partition.
     
 6. Change to arch on the storage partition as root user.
 
@@ -126,6 +139,8 @@ $   grub-mkconfig -o /boot/grub/grub.cfg
 
 $   mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 
+    #Note: efibootmgr is only necesary for UEFI system
+    
 $   pacman -S grub efibootmgr
 
 $   grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
@@ -133,6 +148,10 @@ $   grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=a
     #Note:  If success this is the output.
 
 >   Installation finished. No error reported
+
+    #Note:  For BIOS sytem 32 or 64 bit the grub-install command is
+    #$      grub-install --target=i386-pc --recheck --debug /dev/sdX
+    #       where sdX is the disk where the /boot partition is mounted. In this guide it is /dev/sda
 
 10. Set a password for the root.
 
@@ -144,6 +163,8 @@ $   exit
 
 12. Unmount the storage media.
 
+    #Note:  The spelling for the command is U M O U N T
+    
 $   umount -R /mnt/boot/efi /mnt
 
 13. Reboot the computer with the systemd command.
@@ -425,5 +446,67 @@ Edit /etc/fstab and add the discard option for the SDD partitions:
 
 
 4. Check that the SSD have the latest firmware to further improve the lifetime of the storage media.
+
+
+### ###################################################
+#H# Dual boot, like windows or more OS:es
+### ###################################################
+
+1. To make grub automatically add other systems to boot meny install os-prober
+
+$   pacman -S os-prober
+
+2. regenerate the grub config
+
+$   grub-mkconfig -o /boot/efi/EFI/GRUB/grub.cfg
+
+    #Note:  for BIOS system
+    #$      grub-mkconfig -o /boot/grub/grub.cfg
+    
+### ###################################################    
+### How GRUB 2 works
+### ###################################################
+
+GRUB 2 works like this:
+
+/etc/default/grub contains customization;
+
+/etc/grub.d/ scripts contain GRUB menu information and operating system boot scripts.
+
+When the grub-mkconfig command is run,
+it reads the contents of the grub file and the grub.d scripts and creates the grub.cfg file.
+
+That's all.
+
+### ###################################################    
+### /etc/grub.d/ scripts
+### ###################################################
+
+Let's review the scripts:
+
+00_header           The script that loads GRUB settings from /etc/default/grub,
+                    including timeout, default boot entry, and others.
+
+05_debian_theme     Defines the background, colors and themes.
+                    The name of this script is definitely going to change,
+                    when other distributions adopt GRUB 2.
+
+10_linux            Loads the menu entries for the installed distribution.
+
+20_memtest86+       Loads the memtest utility.
+
+30_os-prober        Is the script that will scan the hard disks for other operating systems
+                    and add them to the boot menu.
+
+40_custom           Is a template that you can use to create additional entries to be added to the boot menu.
+
+The numbering in the script names is somewhat similar to the order of Start/Kill scripts used in different runlevels.
+
+The numbering defines precedence.
+This means that 10_linux will be executed before 20_memtest86+ and therefore placed higher in the boot menu order.
+
+Be very careful when working with these scripts!
+Like the grub.cfg file, they are not intended to be edited, save custom edits for the 40_custom script.
+
 
 
