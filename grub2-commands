@@ -1,0 +1,52 @@
+The list of command-line and menu entry commands
+
+These commands are usable in the command-line and in menu entries.
+If you forget a command, you can run the command
+
+$   help
+
+$   acpi                Load ACPI tables
+$   badram              Filter out bad regions of RAM
+$   blocklist           Print a block list
+$   boot                Start up your operating system
+$   cat                 Show the contents of a file
+$   chainloader 	    Chain-load another boot loader
+$   cmp       	        Compare two files
+$   configfile	        Load a configuration file
+$   cpuid	  	        Check for CPU features
+$   crc 	  	        Calculate CRC32 checksums
+$   date      	        Display or set current date and time
+$   drivemap	  	    Map a drive to another
+$   echo	  	        Display a line of text
+$   export	  	        Export an environment variable
+$   false	  	        Do nothing, unsuccessfully
+$   gettext 	  	    Translate a string
+$   gptsync 	  	    Fill an MBR based on GPT entries
+$   halt	  	        Shut down your computer
+$   help	  	        Show help messages
+$   initrd  	        Load a Linux initrd
+$   initrd16	  	    Load a Linux initrd (16-bit mode)
+$   insmod   	        Insert a module
+$   keystatus	        Check key modifier status
+$   linux	  	        Load a Linux kernel
+$   linux16 	  	    Load a Linux kernel (16-bit mode)
+$   list_env	  	    List variables in environment block
+$   load_env	  	    Load variables from environment block
+$   loopback	  	    Make a device from a filesystem image
+$   ls  	            List devices or files
+$   normal	  	        Enter normal mode
+$   normal_exit 	    Exit from normal mode
+$   parttool	  	    Modify partition table entries
+$   password	  	    Set a clear-text password
+$   password_pbkdf2 	Set a hashed password
+$   play	  	        Play a tune
+$   pxe_unload	        Unload the PXE environment
+$   read	  	        Read user input
+$   reboot      	    Reboot your computer
+$   save_env	  	    Save variables to environment block
+$   search  	  	    Search devices by file, label, or UUID
+$   sendkey 	  	    Emulate keystrokes
+$   set                 Set an environment variable
+$   true                Do nothing, successfully
+$   unset         	    Unset an environment variable
+$   uppermem      	    Set the upper memory size
