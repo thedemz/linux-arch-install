@@ -1,0 +1,22 @@
+### #####################################
+### zshell
+### #####################################
+
+since version 4.3.6-dev-0+20080921-1
+
+zsh contains the vcs_info subsystem developed by Frank Terbeck.
+
+vcs_info provides backends for a lot of vcs like git, bzr, hg, cvs, subversion, ...
+
+eg:
+--- snipp ---
+autoload -Uz vcs_info
+
+precmd() {
+vcs_info
+}
+
+PS1="%# '${vcs_info_msg_0_}'"
+--- snapp ---
+
+

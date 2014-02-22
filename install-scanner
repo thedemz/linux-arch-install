@@ -37,3 +37,31 @@ Change the printer model as needed.
 You can get the idVendor and idProduct code with this command.
 
 $   lsusb
+
+
+### Ubuntu 13:
+
+libsane (1.0.23-0ubuntu1)
+API library for scanners
+libsane-common (1.0.23-0ubuntu1)
+API library for scanners -- documentation and support files
+libsane-dbg (1.0.23-0ubuntu1)
+API development library for scanners [debug symbols]
+libsane-dev (1.0.23-0ubuntu1)
+API development library for scanners [development files]
+libsane-extras (1.0.22.2ubuntu1) [universe]
+API library for scanners -- extra backends
+libsane-extras-common (1.0.22.2ubuntu1) [universe]
+API library for scanners -- documentation and support files
+libsane-extras-dbg (1.0.22.2ubuntu1) [universe]
+API library for scanners -- extra backends [debug symbols]
+libsane-extras-dev (1.0.22.2ubuntu1) [universe]
+API development library for scanners [development files]
+libsane-hpaio (3.13.3-1ubuntu0.1) [security]
+HP SANE backend for multi-function peripherals
+libsane-perl (0.05-2) [universe]
+Perl bindings for the SANE (Scanner Access Now Easy) Project
+
+
+
+

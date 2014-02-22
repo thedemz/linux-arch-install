@@ -1,0 +1,11 @@
+### ###############################
+### Linux Webcam
+### ###############################
+
+Logitech Webcam C270
+
+1. Install webcam viewer
+
+$   yaourt -S guvcview-git
+
+

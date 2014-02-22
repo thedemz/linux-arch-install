@@ -1,6 +1,27 @@
-#####################
-### gnome web browser
-#####################
+### #####################################
+### Themes
+### #####################################
+
+1. Default themes for the GNOME desktop
+
+$   pacman -S gnome-themes-standard
+
+    #Note: Most major desktop environments provide tools to configure the GTK+
+    #      theme, icons, font and font size.
+    #      If you use GNOME, use GNOME Tweak Tool: install gnome-tweak-tool.
+
+
+2. If you prefer not to install a theme manager at all, your theme can be set manually in
+
+>   $XDG_CONFIG_HOME/gtk-3.0/settings.ini
+
+    #Note: this is usually the path:
+
+>   ~/.config/gtk-3.0/settings.ini
+
+### ####################################
+### GNOME web browser
+### ####################################
 
 $   pacman -S epiphany
 
@@ -31,3 +52,61 @@ $   pacman -S chromium
 LaTeX editor Gummi. Clean and simple LaTeX editor.
 
 $   pacman -S gummmi
+
+
+### ####################################
+### Manage user directories
+### ####################################
+
+1. Install Xdg user directories
+
+$   pacman -S xdg-user-dirs
+
+2. Manage user directories like ~/Desktop and ~/Music
+
+    #Note: To create a full suite of localized default user directories within the $HOME directory.
+    #      This is done with the following command:
+
+$   xdg-user-dirs-update
+
+3. When executed, it will automatically create
+
+>   ~/.config/user-dirs.dirs
+
+    #Note: Local config, used by applications to find and use home directories specific to an account.
+
+>   /etc/xdg/user-dirs.defaults
+
+    #Note: Global config, used by applications to find and use home directories generally.
+
+>   ~/.config/user-dirs.locale
+
+    #Note: Local config, used to set the language according to the locale in use.
+
+4. Check that other programs like web browers and torrent program does not use the specified folder if you want it removed.
+
+# Remove folders from the places sidebar.
+
+1. Remove folders from the places config file
+
+    #Note: if you want to get rid of the Desktop folder, add gtk-shell-shows-desktop=0
+    
+>   ~/.config/gtk-3.0/settings.ini
+
+    #Note:  Edit this file.
+
+>   ~/.config/user-dirs.dirs
+
+2. Change to only read permission
+
+$   chmod 444 ~/.config/user-dirs.dirs
+
+3. Delete the Desktop folder
+
+$   rmdir ~/Desktop
+
+4. Reboot
+
+$   systemctl reboot
+
+
