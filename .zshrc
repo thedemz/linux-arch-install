@@ -88,6 +88,28 @@ prompt redhat
 #Show available promt themes
 #$   promt -p
 
+### ####################################
+### Version Control Information
+#
+#   http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
+#   https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
+#   http://www.jukie.net/~bart/conf/zsh/rc/S60_prompt
+#   http://stackoverflow.com/questions/1128496/to-get-a-prompt-which-indicates-git-branch-in-zsh
+### ####################################
 
+autoload -Uz vcs_info
 
+zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+precmd () { vcs_info }
+PS1='%F{5}[%F{2}%n%F{5}] %F{3}%3~ ${vcs_info_msg_0_}%f%# '
+
+# You need to call vcs_info from your precmd function.
+# Once that is done you need a single quoted ’${vcs_info_msg_0_}’ in your prompt.
+
+# To be able to use ’${vcs_info_msg_0_}’ directly in your prompt like this,
+# you will need to have the PROMPT_SUBST option enabled.
+
+# Now call the vcs_info_printsys utility from the command line...
 
