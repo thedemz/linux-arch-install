@@ -88,6 +88,8 @@ prompt redhat
 #Show available promt themes
 #$   promt -p
 
+
+
 ### ####################################
 ### Version Control Information
 #
@@ -97,19 +99,38 @@ prompt redhat
 #   http://stackoverflow.com/questions/1128496/to-get-a-prompt-which-indicates-git-branch-in-zsh
 ### ####################################
 
+# To be able to use ’${vcs_info_msg_0_}’ directly in your prompt,
+# you will need to have the PROMPT_SUBST option enabled.
+setopt prompt_subst
 autoload -Uz vcs_info
 
+# %b - branchname
+# %u - unstagedstr (see below)
+# %c - stangedstr (see below)
+# %a - action (e.g. rebase-i)
+# %R - repository path
+# %S - path in the repository
+
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' unstagedstr 'C'    #display specified symbol if there are unstaged changes
+zstyle ':vcs_info:*' stagedstr 'C'      #display specified symbol if there are staged changes
+
 zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f %u %c'
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
-precmd () { vcs_info }
-PS1='%F{5}[%F{2}%n%F{5}] %F{3}%3~ ${vcs_info_msg_0_}%f%# '
+zstyle ':vcs_info:*' enable git cvs svn
 
-# You need to call vcs_info from your precmd function.
-# Once that is done you need a single quoted ’${vcs_info_msg_0_}’ in your prompt.
+precmd () { vcs_info } # You need to call vcs_info from your precmd function.
+                       # Once that is done you need a single quoted ’${vcs_info_msg_0_}’ in your prompt.
 
-# To be able to use ’${vcs_info_msg_0_}’ directly in your prompt like this,
-# you will need to have the PROMPT_SUBST option enabled.
+# Format the prompt
+#PS1='%F{5}[%F{2}%n%F{5}] %F{3}%3~ ${vcs_info_msg_0_}%f%# '
+PS1='%F{5}[%F{2}%n%F{5}] %f%# '
+
+# Display the VCS information in the right prompt. The {..:- } is a workaround for Zsh below verion 4.3.9.
+#RPROMPT='${vcs_info_msg_0_:- }'
+RPROMPT='%F{3}%3~ ${vcs_info_msg_0_:- }'
+
 
 # Now call the vcs_info_printsys utility from the command line...
 
