@@ -29,4 +29,73 @@ Remove the line that says:
 
 
 
+### ===========================================
+### Downmix sound problems
+### ===========================================
+
+    #Source: http://www.halfgaar.net/surround-sound-in-linux
+
+Setting up a custom Alsa device
+
+Most applications output in 5.1. If you only have a 4.0 soundcard, like me, you have to make a custom sound device for the applications that don't provide downmixing themselves, or if you don't trust applications to downmix properly (like me...). I prefer to let every application which plays Dolby Digital 5.1, also output in 5.1, and control myself how that's routed to 4.0. This way, I'm sure it's done properly. As they say: "if you want something done right, you have to do it yourself."
+
+Alsa has predefined output devices, like surround40 or surround51. When you instruct a DVD player to output to surround51 on a 4.0 soundcard, the center and LFE channel will not be played. You want to control how downmixing to 4.0 is done, so you're going to define a custom sound device in /etc/asound.conf:
+
+      pcm.51to40
+      {
+        type route
+        slave.pcm surround51
+        slave.channels 6
+
+        # Front and rear, at 50% of original signal strength
+        ttable.0.0 0.5
+        ttable.1.1 0.5
+        ttable.2.2 0.5
+        ttable.3.3 0.5
+
+        # Center channel routing (routed to front-left and front-right),
+        # 6dB gaindrop (gain half of main channels) per channel
+        ttable.4.0 0.25
+        ttable.4.1 0.25
+
+        # LFE channel routing (routed to front-left and front-right),
+        # 6dB gaindrop (gain half of main channels) per channel
+        # TODO: actually this is wrong. This article awaits an update.
+        ttable.5.0 0.25
+        ttable.5.1 0.25
+      }
+
+You then have to configure each application to use 51to40 as 5.1 device. Much to my suprise, with one DVD program, this was not possible. I believe it was Ogle or Video Lan Client, but I don't know for sure. For Xine (xine-lib 1.1.4), I have to specify "plug:51to40" as output device.
+
+You may be wondering why I don't trust applications to downmix themselves. There are multiple reasons: one is that people often think the gaindrop should be -3 dB (or 0.707 gain) to play one channel over two speakers, but that should be -6 dB. You can test this very easily with speaker-test (comes with alsa-utils), testing with non-directional sound (low frequencies). Run "speaker-test -c 6 -D 51to40 -t sine -f 40" to play a 40 Hz sine on every channel. Center, left and right will sound equally loud, whereas center would sound louder when you apply only -3 dB gaindrop.
+
+Another reason is that the application may decide to apply dynamic range compression to the downmixed result, to avoid reaching outside the maximum sampling value of a 16 bit value, which can occur when summing signals in the digital domain. I absolutely don't want dynamic range compression and this way I can be sure it's not applied. To avoid clipping distortion, I decrease all the channels in gain somewhat. The gain of the main channels should be 0.5, and the center and LFE 0.25. The reason for that is, with all channels at maximum signal strength, the summed total value is exactly 1.0, so you don't get clipping.
+
+By decreasing the gain on all the channels like I do, you do need a sound sytem that has some room to spare on the volume control and not have too much noise, otherwise you may not be able to get enough usable volume out of it. A better solution than decreasing the gain, is getting a soundcard which can output in 5.1, and then use those seperate signals to feed an amplifier. And of course, when feeding a digital amplifier with s/pdif from a DVD or other AC3 source, this issue is avoided altogether (as is the the need for this entire article).
+
+When you instruct software to downmix dolby 5.1 to 2.0 matrix encoded (there usually is a special option for that), dynamic range compression is always used. The Dolby Digital standard demands it, and because two channels have a lot less combined dynamic range than six, this is also desirable. However, if you really want all the dynamic range of the surround encoding in two channels, you can use this output configuration:
+
+      pcm.51to20
+      {
+        type route
+        slave.pcm surround51
+        slave.channels 6
+
+        # Front and rear, at 33% of original signal strength
+        ttable.0.0 0.33
+        ttable.1.1 0.33
+        ttable.2.0 0.33
+        ttable.3.1 0.33
+
+        # Center channel routing (routed to front-left and front-right),
+        # 6dB gaindrop (gain half of main channels) per channel
+        ttable.4.0 0.16
+        ttable.4.1 0.16
+
+        # LFE channel routing (routed to front-left and front-right),
+        # 6dB gaindrop (gain half of main channels) per channel
+        ttable.5.0 0.16
+        ttable.5.1 0.16
+      }
+
 
