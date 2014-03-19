@@ -1,15 +1,15 @@
-###   ########################################
+### ==========================================
 ### A)	Install base development utilities
-###   ########################################
+### ==========================================
 
 $	pacman -S base-devel
 
 $	pacman -S binutils
 
 
-###   ########################################
+### ==========================================
 ### B)	Install Package Query
-###   ########################################
+### ==========================================
 
 Yaourt depends on another AUR package called Package Query which we need to install first.
 
@@ -26,11 +26,11 @@ Install the tar.xz package you just built with the following command.
 $	sudo pacman -U package-query-1.0.1-1-x86_64.pkg.tar.xz
 
 
-###   ########################################
+### ===========================================
 ### C)	Install Yaourt
-	http://archlinux.fr/yaourt-en
-###   ########################################
+### ===========================================
 
+    #Source: http://archlinux.fr/yaourt-en
 
 $	curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
 
@@ -45,3 +45,30 @@ Install the tar.xz package you just built with the following command.
 $	sudo pacman -U yaourt-1.0.1-1-any.pkg.tar.xz
 
 $	pacman -Sy yaourt
+
+
+### ===========================================
+### Correct way to uninstall software in Arch
+### ===========================================
+
+    #Source: http://www.linuxandlife.com/2011/12/right-way-to-uninstall-software-in-arch.html
+
+Remove the package and its dependencies and all the settings of the application.
+
+$   sudo pacman -Rns packagename
+
+Check if there is any orphan packages on the system.
+
+$   sudo pacman -Qdt
+
+To remove all the orphan packages.
+
+$   sudo pacman -Rns $(pacman -Qdtq)
+
+To clean cache and outdated packages.
+
+    #Note:  Do this after checking that new packages are working.
+
+$   sudo pacman -Scc
+
+
