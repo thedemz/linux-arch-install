@@ -1,0 +1,90 @@
+### =======================================
+### Customize Shortcuts
+### =======================================
+
+1. Install
+
+Shortcut Manager
+
+https://chrome.google.com/webstore/detail/shortcut-manager/mgjjeipcdnnjhgodgjpfkffcejoljijf/related
+
+2. Add shortcuts...
+
+### =======================================
+### Add åäøö ÅÄØÖ support in chrome
+### =======================================
+
+Exported settings:
+
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+e
+// @include *
+// @execute InsertText(["å"])
+// ==/UserScript==
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+d
+// @include *
+// @execute InsertText(["ä"])
+// ==/UserScript==
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+x
+// @include *
+// @execute InsertText(["ø"])
+// ==/UserScript==
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+v
+// @include *
+// @execute InsertText(["ö"])
+// ==/UserScript==
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+Shift+e
+// @include *
+// @execute InsertText(["Å"])
+// ==/UserScript==
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+Shift+d
+// @include *
+// @execute InsertText(["Ä"])
+// ==/UserScript==
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+Shift+x
+// @include *
+// @execute InsertText(["Ø"])
+// ==/UserScript==
+
+// ==UserScript==
+// @ShortcutManager
+// @name Insert free text at the cursor position
+// @namespace M9iJEIBdegXf
+// @key Alt+Shift+v
+// @include *
+// @execute InsertText(["Ö"])
+// ==/UserScript==
