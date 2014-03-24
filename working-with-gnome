@@ -1,6 +1,6 @@
-### #####################################
+### ==========================================
 ### Themes
-### #####################################
+### ==========================================
 
 1. Default themes for the GNOME desktop
 
@@ -19,9 +19,9 @@ $   pacman -S gnome-themes-standard
 
 >   ~/.config/gtk-3.0/settings.ini
 
-### ####################################
+### ==========================================
 ### GNOME web browser
-### ####################################
+### ==========================================
 
 $   pacman -S epiphany
 
@@ -34,16 +34,16 @@ Fix pixelated fonts.
 $   ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
 
 
-###   ##################
-###   gnome tweak tool
-###   ##################
+### ==========================================
+### GNOME tweak tool
+### ==========================================
 
 $   pacman -S gnome-tweak-tool
 
 
-###   ########################
-###   Nice programs to have
-###   ########################
+### ==========================================
+### Nice programs to have
+### ==========================================
 
 Chromium. A stable web browser.
 
@@ -54,9 +54,9 @@ LaTeX editor Gummi. Clean and simple LaTeX editor.
 $   pacman -S gummmi
 
 
-### ####################################
+### ==========================================
 ### Manage user directories
-### ####################################
+### ==========================================
 
 1. Install Xdg user directories
 
@@ -108,5 +108,52 @@ $   rmdir ~/Desktop
 4. Reboot
 
 $   systemctl reboot
+
+### ==========================================
+### Custom Keymap table .Xmodmap
+### ==========================================
+
+1. Create custom map and stor ite in .Xmodmap
+
+$   xmodmap -pke ~/.Xmodmap
+
+2. Make changes and then activate it with.
+
+$   xmodmap ~/.Xmodmap
+
+
+    #Tip:   Manually activate .Xmodmap
+    #       In ~/.xinitrc add.
+    #
+    #       if [ -s ~/.Xmodmap ]; then
+    #           xmodmap ~/.Xmodmap
+    #       fi
+
+
+# Understanging .Xmodmap
+
+Each keycode is followed by the keysym it is mapped to.
+
+Each keysym column in the table corresponds to a particular combination of modifier keys:
+
+Keycode = Key     Shift+Key       mode_switch+Key     mode_switch+Shift+Key       AltGr+Key       AltGr+Shift+Key
+
+Not all keysyms have to be set, but if you want to assign a latter keysym without assigning earlier ones, set them to "NoSymbol"
+
+
+# Find keycodes
+
+The keycodes used by Xorg are reported by a utility called xev
+
+1. Install xorg-xev package.
+
+$   pacman -S xorg-xev
+
+    #Note: To execute xev, you need to be in a graphical environment, not in the console.
+
+2. With the following command you can start xev and show only the relevant parts.
+
+$   xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
+
 
 
