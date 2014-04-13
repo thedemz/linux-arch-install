@@ -1,6 +1,6 @@
-###   ##########################################
-###   Python 3
-###   ##########################################
+### ============================================
+### Python 3
+### ============================================
 
 $   pacman -S python
 
@@ -12,9 +12,22 @@ Install virtualenv to be able to create project specific environments.
 
 $   pacman -S python-virtualenv
 
-###   ###########################################
-###   Python 2
-###   ###########################################
+### ============================================
+### Create Virtual Environment
+### ============================================
+
+1. Create a virtual environment.
+
+$   virtualenv --python=/usr/bin/python3.3 virtual-environment --verbose
+
+2. Test-run the virtual environment.
+
+$   ./virtual-environmen/bin/pip-3.3 freeze
+
+
+### ============================================
+### Python 2
+### ============================================
 
 $   pacman -S python2
 
@@ -27,9 +40,9 @@ Install virtualenv to be able to create project specific environments.
 $   pacman -S python2-virtualenv
 
 
-###   ##########################################
-###   pydoc
-###   ##########################################
+### ============================================
+### pydoc
+### ============================================
 
 Run the pydoc module that is included in the python distribution.
 
@@ -39,9 +52,9 @@ Where 1234 is the port you want the server to run at.
 Then visit http://localhost:1234/ and browse the documentation.
 
 
-###   ##########################################
-###   The Python REPL (the command-line interpreter / Read-Eval-Print-Loop)
-###   ##########################################
+### ============================================
+### The Python REPL (the command-line interpreter / Read-Eval-Print-Loop)
+### ============================================
 
 To see a list of all available libs.
 
@@ -52,9 +65,9 @@ To see functions within a module.
 $   help("posix")
 
 
-###   #############################################
-###   Modules. Example from Python 3.3.3
-###   #############################################
+### ============================================
+### Modules. Example from Python 3.3.3
+### ============================================
 
 DROM               array               imaplib             select
 DLFCN               ast                 imghdr              shelve
