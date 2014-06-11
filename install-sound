@@ -37,9 +37,29 @@ Remove the line that says:
 
 Setting up a custom Alsa device
 
-Most applications output in 5.1. If you only have a 4.0 soundcard, like me, you have to make a custom sound device for the applications that don't provide downmixing themselves, or if you don't trust applications to downmix properly (like me...). I prefer to let every application which plays Dolby Digital 5.1, also output in 5.1, and control myself how that's routed to 4.0. This way, I'm sure it's done properly. As they say: "if you want something done right, you have to do it yourself."
+Most applications output in 5.1.
 
-Alsa has predefined output devices, like surround40 or surround51. When you instruct a DVD player to output to surround51 on a 4.0 soundcard, the center and LFE channel will not be played. You want to control how downmixing to 4.0 is done, so you're going to define a custom sound device in /etc/asound.conf:
+If you only have a 4.0 soundcard, like me, you have to make a custom sound device
+for the applications that dont provide downmixing themselves, or if you dont
+trust applications to downmix properly (like me...).
+I prefer to let every application which plays Dolby Digital 5.1, also output in 5.1,
+and control myself how thats routed to 4.0.
+
+This way, Im sure its done properly.
+
+As they say: "if you want something done right, you have to do it yourself."
+
+Alsa has predefined output devices, like surround40 or surround51.
+When you instruct a DVD player to output to surround51 on a 4.0 soundcard
+the center and LFE channel will not be played.
+
+You want to control how downmixing to 4.0 is done...
+
+1. Define a custom sound device in
+
+$   vim /etc/asound.conf
+
+2. Add the following
 
       pcm.51to40
       {
