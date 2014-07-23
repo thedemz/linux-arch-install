@@ -1,0 +1,89 @@
+############################################
+###   Installing a Arch Linux System on
+###   Virtual Box
+
+    BIOS Motherboard
+    32 bit x86 CPU
+    Normal spinning disk    
+    GPT Partition
+    GRUB 2
+    Wired connection
+    
+############################################
+
+
+
+### ######################################
+#A# Installing Arch
+### ######################################
+
+1. Show the storage medias. Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
+    
+$   fdisk -l
+
+2. Mount the partitions. First the main storage partition then the boot partition.
+
+$   mount /dev/sda2 /mnt
+
+$   mkdir /mnt/boot
+
+$   mount /dev/sda1 /mnt/boot
+
+
+3. Check that there is an internet connection.
+
+$   ping -c 3 www.google.com
+
+4. Dowload the base installation on the storage partition.
+
+$   pacstrap /mtn base
+
+$   pacstrap /mnt grub
+
+    #Note:  It is actually Grub2 that is installed.
+
+5. Create a file system table.
+
+$   genfstab -p /mnt >> /mnt/etc/fstab
+    
+6. Change to arch on the storage partition as root user.
+
+$   arch-chroot /mnt
+
+7. Create the initcpio file, which is the initial RAM disk filesystem.
+
+$   mkinitcpio -p linux
+
+8. Make a grub config file.
+
+$   grub-mkconfig -o /boot/grub/grub.cfg
+
+9. Install GRUB 2 boot loader
+
+$   grub-install /dev/sda
+
+    #Note:  If success this is the output.
+
+>   Installation finished. No error reported
+
+    #Note:  For BIOS sytem 32 or 64 bit the grub-install command is
+    #$      grub-install --target=i386-pc --recheck --debug /dev/sdX
+    #       where sdX is the disk where the /boot partition is mounted. In this guide it is /dev/sda
+
+10. Set a password for the root.
+
+$   passwd
+
+11. Exit the arch-root user.
+
+$   exit
+
+12. Unmount the storage media.
+
+    #Note:  The spelling for the command is U M O U N T
+    
+$   umount -R /mnt/boot /mnt
+
+13. Reboot the computer with the systemd command.
+
+$   systemctl reboot
