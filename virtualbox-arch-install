@@ -87,3 +87,78 @@ $   umount -R /mnt/boot /mnt
 13. Reboot the computer with the systemd command.
 
 $   systemctl reboot
+
+
+### ############################################
+#B# Configure the installed Arch system
+### ############################################
+
+1. Set a hostname with sytemd. The name of the computer in this example it is set to box.
+
+$   hostnamectl set-hostname box
+
+2. Find the right timezone.
+
+$   cd /usr/share/zoneinfo
+$   ls -al
+
+    #Note: This lists available zones and each have subzones.
+
+3. Set the timezone. In this example the zone is US and the subzone is Pacific.
+
+$   timedatectl set-timezone US/Pacific
+
+    #Note: Europe/Stockholm
+
+4. Set the locale. The info about the language and keyboardlayout to be used.
+
+$   vi  /etc/locale.gen
+
+    Uncomment the lines corresponding to the encoding and the language that can be used on the system.
+    In this example the encoding is UTF-8 and the language is en_US.
+
+$   locale-gen
+
+$   localectl set-locale LANG="en_US.UTF-8"
+
+5. Find available internet interfaces. This can be shown like eth0, enp2s0 or something else.
+
+    #Note: This changes if there is another PCI express card added or removed.
+
+$   ls /sys/class/net
+
+6. Start the wired connection. In this example the internet interface was named enp2s0.
+
+$   dhcpcd enp2s0
+
+$   ping -c 3 www.google.com
+
+7. Make the wired connection start at boot with systemd. In this example the internet interface was named enp2s0.
+
+$   systemctl enable dhcpcd@enp2s0.service
+
+$   systemctl start dhcpcd@enp2s0.service
+
+8. Install NTP to get the correct time from the internet.
+
+$   pacman -S ntp
+
+$   systemctl enable ntpd.service
+
+9. Reboot the system
+
+$   systemctl reboot
+
+
+### ############################################
+#C# Install Virtual Box Guest Additions
+### ############################################
+
+After completing the installation of the guest system you will need to install VirtualBox's Guest Additions,
+which consist of device drivers and system applications that optimize the guest operating system for better
+performance and usability.
+
+install virtualbox-guest-utils, which provides virtualbox-guest-modules as a required dependency.
+
+$   pacman -S virtualbox-guest-utils
+
