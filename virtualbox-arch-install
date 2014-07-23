@@ -162,3 +162,61 @@ install virtualbox-guest-utils, which provides virtualbox-guest-modules as a req
 
 $   pacman -S virtualbox-guest-utils
 
+
+
+
+
+
+
+Load the Virtualbox kernel modules
+
+Note: As of virtualbox-guest-modules version 4.3.12-1 there is FS#40495 which prevent the modules from being found.
+Running # depmod before modprobe fixed this for me.
+
+To load the modules manually, type:
+# modprobe -a vboxguest vboxsf vboxvideo
+
+To load the VirtualBox module at boot time, refer to Kernel_modules#Loading and create a *.conf file
+(e.g. virtualbox.conf) in /etc/modules-load.d/ with these lines:
+/etc/modules-load.d/virtualbox.conf
+vboxguest
+vboxsf
+vboxvideo
+
+Launch the VirtualBox guest services
+
+After the rather big installation step dealing with VirtualBox kernel modules, now you need to start the guest services.
+The guest services are actually just a binary executable called VBoxClient which will interact with your X Window System. VBoxClient manages the following features:
+the shared clipboard and the drag and drop between the host and the guest;
+the seamless window mode;
+the fact that the guest display is automatically resized according to the size of the guest window;
+and finally checking the VirtualBox host version.
+All these features can be enabled indepently and manually with their dedicated flags.
+
+# VBoxClient --clipboard --draganddrop --seamless --display --checkhostversion
+
+But VirtualBox provides a currently undocumented feature, a Bash script VBoxClient-all
+which enables all these features automatically and checks if a X11 server is really running before
+enabling some of them.
+
+# VBoxClient-all
+
+To start that script automatically when system starts run the following command as root (or sudo):
+# systemctl enable vboxservice
+If you do not want to use systemd: (If you are unsure, use the method above):
+if you are using a desktop environment, you just need enable a checkbox or add the /usr/sbin/VBoxClient-all to the autostart section in your DE settings (the DE will typically set a flag to a .desktop file in ~/.config/autostart - see the Autostart section for more details -);
+if you do not have any desktop environment, add the following line to the top of ~/.xinitrc (copy the file from /etc/skel/.xinitrc if it does not exist) above any exec options:
+~/.xinitrc
+/usr/bin/VBoxClient-all
+
+Now, you should have a working ArchLinux guest. Congratulations!
+
+
+
+
+
+
+
+
+
+
