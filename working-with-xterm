@@ -1,13 +1,20 @@
-The basic terminal is xterm.
+### ======================================================
+### XTerm
+### ======================================================
+
+ABOUT:  The basic terminal is xterm.
+        Xresources can be edited to get other colors and mutch more.
+
+        .Xresources
 
 
-Xresources can be edited to get other colors and mutch more.
+#   To reread your .Xresources file, and throw away your old resources:
 
-    .Xresources
+$   xrdb ~/.Xresources
 
 
-XTerm Control Sequence:
+INFO:   XTerm Control Sequence:
     
-    http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+        http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
 
