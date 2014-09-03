@@ -19,6 +19,25 @@ $   pacman -S gnome-themes-standard
 
 >   ~/.config/gtk-3.0/settings.ini
 
+
+### ==========================================
+### Background Image
+### ==========================================
+
+With multiple monitors (twinview) there now appears to now be no way to stretch/zoom a wallpaper over two screens?
+The Gnome devs have removed such configuration options...
+
+The options are still there, just removed from the GUI
+
+Use gsettings:
+
+gsettings set org.gnome.desktop.background picture-options "centered"
+
+Determines how the image set by wallpaper_filename is rendered.
+
+Possible values are "none", "wallpaper", "centered", "scaled", "stretched", "zoom", "spanned".
+
+
 ### ==========================================
 ### GNOME web browser
 ### ==========================================
