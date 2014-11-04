@@ -1,0 +1,222 @@
+############################################
+###   Installing a Arch Linux System on
+###   Virtual Box
+
+    BIOS Motherboard
+    32 bit x86 CPU
+    Normal spinning disk    
+    GPT Partition
+    GRUB 2
+    Wired connection
+    
+############################################
+
+
+
+### ######################################
+#A# Installing Arch
+### ######################################
+
+1. Show the storage medias. Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
+    
+$   fdisk -l
+
+2. Mount the partitions. First the main storage partition then the boot partition.
+
+$   mount /dev/sda2 /mnt
+
+$   mkdir /mnt/boot
+
+$   mount /dev/sda1 /mnt/boot
+
+
+3. Check that there is an internet connection.
+
+$   ping -c 3 www.google.com
+
+4. Dowload the base installation on the storage partition.
+
+$   pacstrap /mtn base
+
+$   pacstrap /mnt grub
+
+    #Note:  It is actually Grub2 that is installed.
+
+5. Create a file system table.
+
+$   genfstab -p /mnt >> /mnt/etc/fstab
+    
+6. Change to arch on the storage partition as root user.
+
+$   arch-chroot /mnt
+
+7. Create the initcpio file, which is the initial RAM disk filesystem.
+
+$   mkinitcpio -p linux
+
+8. Make a grub config file.
+
+$   grub-mkconfig -o /boot/grub/grub.cfg
+
+9. Install GRUB 2 boot loader
+
+$   grub-install /dev/sda
+
+    #Note:  If success this is the output.
+
+>   Installation finished. No error reported
+
+    #Note:  For BIOS sytem 32 or 64 bit the grub-install command is
+    #$      grub-install --target=i386-pc --recheck --debug /dev/sdX
+    #       where sdX is the disk where the /boot partition is mounted. In this guide it is /dev/sda
+
+10. Set a password for the root.
+
+$   passwd
+
+11. Exit the arch-root user.
+
+$   exit
+
+12. Unmount the storage media.
+
+    #Note:  The spelling for the command is U M O U N T
+    
+$   umount -R /mnt/boot /mnt
+
+13. Reboot the computer with the systemd command.
+
+$   systemctl reboot
+
+
+### ############################################
+#B# Configure the installed Arch system
+### ############################################
+
+1. Set a hostname with sytemd. The name of the computer in this example it is set to box.
+
+$   hostnamectl set-hostname box
+
+2. Find the right timezone.
+
+$   cd /usr/share/zoneinfo
+$   ls -al
+
+    #Note: This lists available zones and each have subzones.
+
+3. Set the timezone. In this example the zone is US and the subzone is Pacific.
+
+$   timedatectl set-timezone US/Pacific
+
+    #Note: Europe/Stockholm
+
+4. Set the locale. The info about the language and keyboardlayout to be used.
+
+$   vi  /etc/locale.gen
+
+    Uncomment the lines corresponding to the encoding and the language that can be used on the system.
+    In this example the encoding is UTF-8 and the language is en_US.
+
+$   locale-gen
+
+$   localectl set-locale LANG="en_US.UTF-8"
+
+5. Find available internet interfaces. This can be shown like eth0, enp2s0 or something else.
+
+    #Note: This changes if there is another PCI express card added or removed.
+
+$   ls /sys/class/net
+
+6. Start the wired connection. In this example the internet interface was named enp2s0.
+
+$   dhcpcd enp2s0
+
+$   ping -c 3 www.google.com
+
+7. Make the wired connection start at boot with systemd. In this example the internet interface was named enp2s0.
+
+$   systemctl enable dhcpcd@enp2s0.service
+
+$   systemctl start dhcpcd@enp2s0.service
+
+8. Install NTP to get the correct time from the internet.
+
+$   pacman -S ntp
+
+$   systemctl enable ntpd.service
+
+9. Reboot the system
+
+$   systemctl reboot
+
+
+### ############################################
+#C# Install Virtual Box Guest Additions
+### ############################################
+
+After completing the installation of the guest system you will need to install VirtualBox's Guest Additions,
+which consist of device drivers and system applications that optimize the guest operating system for better
+performance and usability.
+
+install virtualbox-guest-utils, which provides virtualbox-guest-modules as a required dependency.
+
+$   pacman -S virtualbox-guest-utils
+
+
+
+
+
+
+
+Load the Virtualbox kernel modules
+
+Note: As of virtualbox-guest-modules version 4.3.12-1 there is FS#40495 which prevent the modules from being found.
+Running # depmod before modprobe fixed this for me.
+
+To load the modules manually, type:
+# modprobe -a vboxguest vboxsf vboxvideo
+
+To load the VirtualBox module at boot time, refer to Kernel_modules#Loading and create a *.conf file
+(e.g. virtualbox.conf) in /etc/modules-load.d/ with these lines:
+/etc/modules-load.d/virtualbox.conf
+vboxguest
+vboxsf
+vboxvideo
+
+Launch the VirtualBox guest services
+
+After the rather big installation step dealing with VirtualBox kernel modules, now you need to start the guest services.
+The guest services are actually just a binary executable called VBoxClient which will interact with your X Window System. VBoxClient manages the following features:
+the shared clipboard and the drag and drop between the host and the guest;
+the seamless window mode;
+the fact that the guest display is automatically resized according to the size of the guest window;
+and finally checking the VirtualBox host version.
+All these features can be enabled indepently and manually with their dedicated flags.
+
+# VBoxClient --clipboard --draganddrop --seamless --display --checkhostversion
+
+But VirtualBox provides a currently undocumented feature, a Bash script VBoxClient-all
+which enables all these features automatically and checks if a X11 server is really running before
+enabling some of them.
+
+# VBoxClient-all
+
+To start that script automatically when system starts run the following command as root (or sudo):
+# systemctl enable vboxservice
+If you do not want to use systemd: (If you are unsure, use the method above):
+if you are using a desktop environment, you just need enable a checkbox or add the /usr/sbin/VBoxClient-all to the autostart section in your DE settings (the DE will typically set a flag to a .desktop file in ~/.config/autostart - see the Autostart section for more details -);
+if you do not have any desktop environment, add the following line to the top of ~/.xinitrc (copy the file from /etc/skel/.xinitrc if it does not exist) above any exec options:
+~/.xinitrc
+/usr/bin/VBoxClient-all
+
+Now, you should have a working ArchLinux guest. Congratulations!
+
+
+
+
+
+
+
+
+
+

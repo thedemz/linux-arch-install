@@ -1,0 +1,71 @@
+### =====================================================
+### RVM - Ruby Version Manager
+### =====================================================
+
+ABOUT:  Use RVM and save yourself weeks of pain.
+
+        You can use multiple Ruby versions and each version has it's own separate set of gems.
+        
+        That way you can have 1.8.7 and 1.9.2 installed simultaneously
+        with Rails 2 and Rails 3 gems on the former and the latter respectively.
+
+#   Installing a Ruby version is as simple as:
+
+$   rvm install 1.9.2
+$   rvm install 1.8.7
+
+#   To switch between the two:
+
+$   rvm 1.9.2
+$   rvm 1.8.7.
+
+#   You can set the default Ruby with:
+
+$   rvm --default 1.9.2
+$   rvm --default 1.8.7.
+
+Note:   RVM won't touch your local Ruby nor it's gems.
+
+#   You can switch back to it at any time:
+
+$   rvm system.
+
+
+Whole point of RVM is so that you can have multiple versions of Ruby and switch among them easily..
+
+rvm install 1.8.7 #or some specific version
+
+#   List installed versions:
+
+$   rvm list known
+
+#   Create a gemset called "rails202" for Ruby 1.8.7
+
+$   rvm gemset create rails202 
+
+#   Make the gemset the current selection:
+
+$   rvm 1.8.7@rails202 
+
+#   Install rails (just for this gemset!)
+
+$   gem install rails -v 2.0.2 
+
+#now, we have a gemset called "rails202" in Ruby 1.8.7.
+#anytime we want to use it, we do:
+rvm 1.8.7@rails202
+
+#create as many gemsets needed, eg for rails 3.0.3 on Ruby 1.8.7 we can do the
+#similar as above. Then to use the new gemset just do:
+rvm 1.8.7@rails303
+
+#et voila! we are now using Rails 3.0.3 on Ruby 1.8.7 !
+
+
+### ====================================================
+### Non-rvm:
+### ====================================================
+
+#   List of installed ruby packages on using the command:
+
+$   dpkg -l | grep ruby
