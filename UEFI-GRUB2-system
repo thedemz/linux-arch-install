@@ -87,6 +87,8 @@ For example:
     (parted) mklabel gpt
     (parted) mkpart P1 ext3 1MiB 8MiB     
     
+    Create a mebibyte partition {+1MiB with gdisk) on the disk with no file system and type ef02 (or bios_grub in parted).
+    
 ### ######################################
 #B# Installing Arch
 ### ######################################
