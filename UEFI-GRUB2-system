@@ -11,6 +11,13 @@
     
 ############################################
 
+### Make a Arch Linux USB drive ###
+
+#   replacing /dev/sdx with your drive, e.g. /dev/sdb.
+    (do not append a partition number, so do not use something like /dev/sdb1)
+
+$   dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx && sync
+
 ### ######################################
 #A# Setting upp storage partitions
 ### ######################################
