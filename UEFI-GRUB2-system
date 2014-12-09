@@ -51,7 +51,7 @@ Thus UEFI is supported.
 ### Partition the storage media.
 ### ######################################
 
-    Use GNUParted Live CD or USB.
+### Use GNUParted Live CD or USB. ###
 
 1. In advanced settings choose GPT and make the storage use GPT.
 
@@ -70,7 +70,23 @@ Thus UEFI is supported.
 
 5. Set the FAT32 to have the flag "boot"
 
+### Using GNU Parted ###
 
+    Parted has two modes: command line and interactive. Parted should always be started with:
+    
+$   parted device
+
+    where device is the hard disk device to edit (for example /dev/sda).
+    If you omit the DEVICE argument, Parted will attempt to guess which device you want.
+    
+Interactive mode
+In interactive mode, commands are entered one at a time at a prompt, and modify the disk immediately.
+
+For example:
+
+    (parted) mklabel gpt
+    (parted) mkpart P1 ext3 1MiB 8MiB     
+    
 ### ######################################
 #B# Installing Arch
 ### ######################################
