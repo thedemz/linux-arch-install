@@ -51,6 +51,31 @@ Thus UEFI is supported.
 ### Partition the storage media.
 ### ######################################
 
+On a computer with a newer EFI rather than a BIOS:
+
+    boot loaders are not stored:
+    
+        in the MBR,
+        in officially-unallocated post-MBR sectors,
+        or in BIOS Boot Partitions;
+        
+    instead, boot loaders reside as ordinary files on a FAT partition known as the EFI System Partition (ESP).
+    (Confusingly, Debian and Ubuntu installers refer to the ESP by the name "EFI boot partition")
+    but this name is non-standard.
+    
+    GParted and parted identify the ESP as having its "boot flag" set,
+    (although that terminology means something completely different on MBR disks.)
+    
+    An ESP can exist on either a GPT disk or an MBR disk,
+    but the former is much more common on EFI-based computers.
+    
+    The EFI approach is much safer and much more flexible than the BIOS approach,
+    since it doesn't tuck raw code away in weird places.
+    
+    With ESP the boot loaders reside in files, just like OS-level programs.
+    This makes them easier to identify and manipulate. 
+
+
 ### Use GNUParted Live CD or USB. ###
 
 1. In advanced settings choose GPT and make the storage use GPT.
@@ -90,7 +115,7 @@ For example:
     Create a mebibyte partition {+1MiB with gdisk) on the disk with no file system and type ef02 (or bios_grub in parted).
 
     parted /dev/hda
-    set 1 bios_grub on
+    set 1 boot on
     quit
     
 ### ######################################
