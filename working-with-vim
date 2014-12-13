@@ -140,6 +140,55 @@ respectively.
 
 The notion of "paragraph" defaults to something which is usually intuitively reasonable. Thus it often works for code as well as prose.
 
+### #########################################
+### Movement on the screen
+### #########################################
+
+Jump half the screen down
+
+    CTRL+d
+
+Jump half the screen up
+
+
+    CTRL+u
+
+Jump a hole screen forward
+
+    CTRL+f
+
+Jump a hole screen backward
+
+    CTRL+b
+
+### #########################################
+### Movement on the window
+### #########################################
+
+Go to the middle of the window
+
+    SHIFT+M
+
+Go to the home of the window
+
+    SHIFT+H
+
+Go to the last line of the window
+
+    SHIFT+L
+
+Make the current line be the middle line
+
+    zz
+
+Make the current line be the top line
+
+    zt
+
+Make the current line be the bottom line
+
+    zb
+
 
 #### #######################################
 #### Marks
@@ -176,6 +225,10 @@ Thus
     `z
 
 will move directly to the exact location of the 'z' mark.
+
+Jump between the last position
+
+    ''
 
 Because these are "movements" they can also be used as subjects for other "statements."
 
@@ -245,4 +298,73 @@ to write any macros because the text manipulation language is sufficiently conci
 
 
 
+### #####################################
+### Command line inside vim
+### #####################################
+
+Invoking commands from the shell
+
+    :!
+
+after that any command like ls
+
+    :!ls
+
+Paste the output into the file
+
+    :read !date
+
+Sun Nov 23 02:04:26 CET 2014
+
+Dowload a text from a file inside the file
+
+    :r !curl --silent url.of.text.file
+
+
+### ####################################
+### Buffers - Store information of files
+### ####################################
+
+List all the buffers in memory
+
+    :ls
+
+Go to next buffer
+
+    :bnext
+    :bn
+
+Go to the previous buffer
+
+    :bprevious
+    :bp
+
+The pound sign # marks the previous buffer
+The at sign a marks the current buffer
+
+Go to last visited buffer
+
+    :b#
+
+Go to the first buffer
+
+    :bf
+
+
+
+### ####################################### 
+### Macros
+### ####################################### 
+
+Make a macro in buffer a
+
+    qa
+
+Run macro
+
+    @a
+
+Run last macro
+
+    @@
 
