@@ -1,0 +1,21 @@
+To connect to a server, run:
+$ ssh -p port user@server-address
+
+
+SSH can be configured to deny remote logins with the root user by editing
+
+/etc/ssh/sshd_config.
+
+Simply change #PermitRootLogin yes to no and uncomment the line:
+
+/etc/ssh/sshd_config
+
+PermitRootLogin no
+
+...
+Next, restart the SSH daemon:
+
+# systemctl restart sshd
+
+You will now be unable to log in through SSH under root,
+but will still be able to log in with your normal user and use su or sudo to do system administration.
