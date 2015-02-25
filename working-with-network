@@ -19,3 +19,47 @@ Next, restart the SSH daemon:
 
 You will now be unable to log in through SSH under root,
 but will still be able to log in with your normal user and use su or sudo to do system administration.
+
+
+### ###############################################
+### SSH tunnel
+### ###############################################
+You can setup a local SSH tunnel, eg if you want port 80 to hit your app bound to 3000:
+
+sudo ssh $USERNAME@localhost -L 80:localhost:3000 -N
+
+This has the advantage of working with script servers, and being very simple.
+
+### ###############################################
+### Or use capabilities instead:
+### ###############################################
+
+sudo pacman -S libcap
+
+setcap cap_net_bind_service=ep /path/to/server/executable
+
+setcap 'cap_net_bind_service=+ep' /path/to/program
+
+this will work for specific processes. But to allow a particular user to bind to ports below 1024 you will have to add him to sudoers.
+
+
+### ##############################################
+### Syncing files remotely
+### ##############################################
+
+SCP - Secure Copy
+
+Local to Server
+$scp -p 22 source/dir user@IPorDomain~/destination/dir
+
+Server to Local
+$scp -p 22 user@IPorDomain~/source/dir destination/dir
+
+
+Syncing Files with rsync and scp combined.
+
+from /remote/dir/ on remotehost, as remoteuser, to /this/dir/ on thishost, as thisuser.
+
+I want to make sure that 'rsync' over 'ssh' works at all before I begin to automate the process, so I test it first as thisuser:
+
+$ rsync -avz -e ssh remoteuser@remotehost:/remote/dir /this/dir/ 
