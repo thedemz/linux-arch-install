@@ -48,19 +48,21 @@ Server = http://catalyst.wirephire.com/repo/xorg116/$arch
 #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg116/$arch
 #Server = http://mirror.hactar.bz/Vi0L0/xorg116/$arch
 
+[catalyst]
+Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+## Mirrors, if the primary server does not work or is too slow:
+#Server = http://70.239.162.206/catalyst-mirror/repo/catalyst/$arch
+#Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/catalyst/$arch
+#Server = http://mirror.hactar.bz/Vi0L0/catalyst/$arch
 
-put [xorg116] repo first, add [catalyst] repo or AUR,
+put [xorg116] repo first, then [catalyst] repo
 
 pacman -Syuu catalyst catalyst-utils
 
+pacman -S catalyst-hook catalyst-utils catalyst-libgl opencl-catalyst
 
-https://aur.archlinux.org/packages/catalyst/
+pacman -S lib32-catalyst-utils lib32-catalyst-libgl lib32-opencl-catalyst
 
-yaourt -S catalyst
-
-NOTE: If you install the Catalyst package from the AUR,
-you will have to rebuild Catalyst every time the kernel is updated.
-Otherwise X will fail to start.
 
 ### ########################################
 ### Adding unofficial keys
