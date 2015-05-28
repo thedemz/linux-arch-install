@@ -37,6 +37,8 @@ If a repository is signed, you will have to obtain and locally sign the associat
 as explained in Pacman-key#Adding unofficial keys.
 
 
+
+
 xorg116
 Catalyst does not support xorg-server 1.17
 
@@ -46,8 +48,33 @@ Server = http://catalyst.wirephire.com/repo/xorg116/$arch
 #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg116/$arch
 #Server = http://mirror.hactar.bz/Vi0L0/xorg116/$arch
 
+### ########################################
+### Adding unofficial keys
+### #########################################
 
+Key-ID: 653C3094
 
+You can use this method, for example, to add your own key to the pacman keyring,
+or when enabling a signed unofficial repository.
+
+Note: You may first need to run dirmngr as root
+
+First get the key ID (keyid) from the owner of the key.
+
+Then you need to add the key to the keyring:
+
+If the key is found on a keyserver, import it with:
+# pacman-key -r keyid
+
+If otherwise a link to a keyfile is provided, download it and then run:
+# pacman-key --add /path/to/downloaded/keyfile
+
+Always be sure to verify the fingerprint, as you would with a master key, or any other key which you are going to sign.
+$ pacman-key -f keyid
+
+Finally, you need to locally sign the imported key:
+# pacman-key --lsign-key keyid
+You now trust this key to sign packages.
 
 ### ################################################
 ### Disabling modesetting
