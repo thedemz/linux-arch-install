@@ -48,6 +48,14 @@ Server = http://catalyst.wirephire.com/repo/xorg116/$arch
 #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg116/$arch
 #Server = http://mirror.hactar.bz/Vi0L0/xorg116/$arch
 
+
+put [xorg116] repo first, add [catalyst] repo or AUR,
+
+pacman -Syuu catalyst catalyst-utils
+yaourt -S catalyst
+
+
+
 ### ########################################
 ### Adding unofficial keys
 ### #########################################
