@@ -90,6 +90,56 @@ Finally, you need to locally sign the imported key:
 # pacman-key --lsign-key keyid
 You now trust this key to sign packages.
 
+
+### #########################################
+### Configuring the driver
+### #########################################
+After you have installed the driver via your chosen method,
+you will have to:
+
+1. Configure X to work with Catalyst.
+2. make sure the module gets loaded at boot.
+3. Also, one should disable kernel mode setting.
+
+
+### ##########################################
+### Configuring X
+### ##########################################
+
+To configure X, you will have to create an xorg.conf file.
+
+Catalyst provides its own aticonfig tool to create and/or modify this file.
+It also can configure virtually every aspect of the card for it also accesses the
+/etc/ati/amdpcsdb file.
+
+For a complete list of aticonfig options, run:
+
+# aticonfig --help | less
+
+## Warning ##
+Use the --output option before committing to /etc/X11/ as an xorg.conf
+file will override anything in /etc/X11/xorg.conf.d/
+
+Now, to configure Catalyst.
+
+If you have only one monitor, run this:
+
+# aticonfig --initial
+
+### #############################################
+### Loading the module at boot
+### #############################################
+
+We have to blacklist the radeon module to prevent it from auto-loading.
+Blacklist radeon in /etc/modprobe.d/modprobe.conf.
+Also make sure that it is not loaded by any file under /etc/modules-load.d/.
+For more information, see kernel modules#Blacklisting.
+
+Then we will have to make sure that the fglrx module gets auto-loaded.
+Either add fglrx on a new line of an existing module file located under /etc/modules-load.d/,
+or create a new file and add fglrx.
+
+
 ### ################################################
 ### Disabling modesetting
 ### ################################################
