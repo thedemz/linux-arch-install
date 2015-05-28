@@ -131,13 +131,25 @@ If you have only one monitor, run this:
 ### #############################################
 
 We have to blacklist the radeon module to prevent it from auto-loading.
-Blacklist radeon in /etc/modprobe.d/modprobe.conf.
+Add the line:
+
+blacklist radeon
+
+in
+
+/etc/modprobe.d/modprobe.conf
+
 Also make sure that it is not loaded by any file under /etc/modules-load.d/.
 For more information, see kernel modules#Blacklisting.
 
 Then we will have to make sure that the fglrx module gets auto-loaded.
 Either add fglrx on a new line of an existing module file located under /etc/modules-load.d/,
 or create a new file and add fglrx.
+
+/etc/modules-load.d/catalyst.conf
+
+
+grub-mkconfig -o /boot/grub/grub.cfg
 
 
 ### ################################################
