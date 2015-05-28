@@ -52,9 +52,15 @@ Server = http://catalyst.wirephire.com/repo/xorg116/$arch
 put [xorg116] repo first, add [catalyst] repo or AUR,
 
 pacman -Syuu catalyst catalyst-utils
+
+
+https://aur.archlinux.org/packages/catalyst/
+
 yaourt -S catalyst
 
-
+NOTE: If you install the Catalyst package from the AUR,
+you will have to rebuild Catalyst every time the kernel is updated.
+Otherwise X will fail to start.
 
 ### ########################################
 ### Adding unofficial keys
