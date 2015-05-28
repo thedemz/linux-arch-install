@@ -1,0 +1,73 @@
+AMD Radeon™ R9 290 Series
+AMD Radeon™ R9 280 Series
+AMD Radeon™ R9 270 Series
+AMD Radeon™ R7 260 Series
+AMD Radeon™ R7 250 Series
+AMD Radeon™ R7 240 Series
+AMD Radeon™ R5 230 Series
+
+AMD Radeon™ HD 8000 Series
+AMD Radeon™ HD 7000 Series
+AMD Radeon™ HD 6000 Series
+ATI Radeon™ HD 5000 Series
+
+Before attempting to install the AMD Catalyst™ Linux Graphics Driver
+the following software must be installed:
+
+Xorg/Xserver 7.4 and above (up to 1.16)
+Linux kernel 2.6 or above (up to 3.17)
+glibc version 2.2 or 2.3
+POSIX Shared Memory (/dev/shm) support is required for 3D applications
+
+The legacy Catalyst driver does not support Xorg Server 1.17.
+
+To get X Org servers version from command line, do: 
+
+Xorg -version
+
+Should you want to use this driver, instructions on how to roll back to Xorg Server 1.16:
+
+Unofficial user repositories (use the same PGP key as for the catalyst repository).
+Remember to add the chosen repository above all other repositories in pacman.conf,
+even above your catalyst repository, should you use one.
+
+In order to use these repositories, you will have to add them to /etc/pacman.conf,
+as explained in pacman#Repositories.
+If a repository is signed, you will have to obtain and locally sign the associated key,
+as explained in Pacman-key#Adding unofficial keys.
+
+
+xorg116
+Catalyst does not support xorg-server 1.17
+
+[xorg116]
+Server = http://catalyst.wirephire.com/repo/xorg116/$arch
+## Mirrors, if the primary server does not work or is too slow:
+#Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg116/$arch
+#Server = http://mirror.hactar.bz/Vi0L0/xorg116/$arch
+
+
+
+
+### ################################################
+### Disabling modesetting
+### ################################################
+
+Disable KMS for various reasons, such as getting a blank screen or a "no signal" error from the display,
+when using the Catalyst driver, etc.
+
+To disable KMS add nomodeset as a kernel parameter.
+
+There are three ways to pass options to the kernel and thus control its behaviour:
+When building the kernel. See Kernel Compilation for details.
+When starting the kernel (usually, when invoked from a boot loader).
+At runtime (through the files in /proc and /sys). See sysctl for details.
+
+### GRUB2
+
+manually edit /boot/grub/grub.cfg
+
+add at the end of the string:
+
+linux /boot/vmlinuz-linux root=/dev/sda3 initrd=/boot/initramfs-linux.img quiet splash
+
