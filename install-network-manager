@@ -1,0 +1,13 @@
+# Install network manager and the GNOME applet
+
+$ pacman -S networkmanager network-manager-applet
+
+NetworkManager is controlled via NetworkManager.service.
+
+Once the NetworkManager daemon is started,
+it will automatically connect to any available "system connections" that have already been configured.
+
+Any "user connections" or unconfigured connections will need nmcli or an applet to configure and connect.
+
+$ systemctl enable NetworkManager.service
+$ systemctl start NetworkManager.service
