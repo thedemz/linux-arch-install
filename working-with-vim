@@ -64,6 +64,56 @@ or, for the light background mode of Solarized:
 ### #######################################
 
 The "Zen" of vi is that you're speaking a language.
+
+<nbr> Verb + Noun, is a command
+
+Verbs:
+i - insert
+d - delete
+c - change
+y - yank
+v - visual select, smelly: There is probably a nother verb you can use for the task.
+r - replace
+
+
+Nouns:
+i - inner
+w - word
+t - tag
+p - paragraf
+" - quote
+_ - line
+as - "a sentence"
+
+
+Cursor Move:
+hjkl - left down up right
+[]{}
+:nbr
+b - back
+gg - top
+G - bottom
+CTRL+d - Jump half the screen down
+CTRL+u - Jump half the screen up
+CTRL+f - Jump a hole screen forward
+CTRL+b - Jump a hole screen backward
+
+
+Search:
+f - F -find the next character
+t - T - find the next character, up to not including the character
+/ - ? - search up to
+
+
+
+Quickies:
+
+.  - repeat command
+y_ - yank line, synonym yy
+d_ - delete line, synonym dd
+
+
+
 The initial y is a verb.
 
 The statement
@@ -368,3 +418,6 @@ Run last macro
 
     @@
 
+
+
+:set relativenumber
