@@ -74,7 +74,7 @@ c - change
 y - yank
 v - visual select, smelly: There is probably a nother verb you can use for the task.
 r - replace
-
+s - surround
 
 Nouns:
 i - inner
@@ -112,7 +112,7 @@ Quickies:
 y_ - yank line, synonym yy
 d_ - delete line, synonym dd
 
-
+ysiw" - add surrounding double quote
 
 The initial y is a verb.
 
