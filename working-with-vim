@@ -65,7 +65,7 @@ or, for the light background mode of Solarized:
 
 The "Zen" of vi is that you're speaking a language.
 
-<nbr> Verb + Noun, is a command
+<nbr> Verb + Adjective + Noun, is a command
 
 Verbs:
 i - insert
@@ -74,25 +74,42 @@ c - change
 y - yank
 v - visual select, smelly: There is probably a nother verb you can use for the task.
 r - replace
+m - mark the current location, a to z
+' - go to mark, a to z
+" - chose register, a to z
+J - join lines
+
+S - substitute line
+s - substitute character
+
+
+Adjectives:
+i - inner
 s - surround
 
 Nouns:
-i - inner
 w - word
 t - tag
 p - paragraf
 " - quote
 _ - line
 as - "a sentence"
-
+{ - } - paragraph
 
 Cursor Move:
 hjkl - left down up right
+L - screen bottom
+H - screen top
+M - screen middle
 []{}
 :nbr
-b - back
-gg - top
-G - bottom
+
+b - back word
+w - next word
+
+gg - goto top line
+G - goto line, default to last line of the file, prefix <line nbr>
+
 CTRL+d - Jump half the screen down
 CTRL+u - Jump half the screen up
 CTRL+f - Jump a hole screen forward
@@ -105,6 +122,30 @@ t - T - find the next character, up to not including the character
 / - ? - search up to
 
 
+Colon Commands:
+
+# Historically inherited by the ed (line editor) and later ex (extended line editor) commands.
+# vi is the visual interface to ex.
+# vim (vi improved)
+
+# Colon Commands normally operate over lines of text.
+
+:% s/foo/bar/g  - global substitution technique
+:127,215 s/foo/bar  - change the first occurrence of foo into bar on each line between 127 and 215.
+
+:... g - ... is the prefix for globally applying a subsequent command to all lines that match the pattern (regex).
+:... v - ... is the prefix for globally applying a subsequent command to all lines that NOT match the pattern (regex). conVerse.
+
+:g/re/p - globally print linses containing a regular expression.
+
+:% g/foo/m$ - move all linse containing foo to end of file
+
+:% g/^ /-1j - for every matching line, go up one line and join them
+
+:% g/foo/s/bar/zzz/g - for every line containing foo substitute all bar with zzz
+
+:r foo - inserts the contents of the file foo at the current line
+
 
 Quickies:
 
@@ -114,6 +155,16 @@ d_ - delete line, synonym dd
 
 ysiw" - add surrounding double quote
 cst - change surrounding tag
+
+
+
+
+
+
+
+
+
+
 
 The initial y is a verb.
 
@@ -422,3 +473,4 @@ Run last macro
 
 
 :set relativenumber
+:nnoremap K i<CR><Esc> #krack line
