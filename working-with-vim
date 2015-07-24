@@ -113,6 +113,7 @@ y_ - yank line, synonym yy
 d_ - delete line, synonym dd
 
 ysiw" - add surrounding double quote
+cst - change surrounding tag
 
 The initial y is a verb.
 
