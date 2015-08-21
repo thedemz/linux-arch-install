@@ -50,10 +50,10 @@ this will work for specific processes. But to allow a particular user to bind to
 SCP - Secure Copy
 
 Local to Server
-$scp -p 22 source/dir user@IPorDomain~/destination/dir
+$scp -r -P 22 source/dir user@IPorDomain~/destination/dir
 
 Server to Local
-$scp -p 22 user@IPorDomain~/source/dir destination/dir
+$scp -r -P 22 user@IPorDomain~/source/dir destination/dir
 
 
 Syncing Files with rsync and scp combined.
