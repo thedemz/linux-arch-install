@@ -63,3 +63,12 @@ from /remote/dir/ on remotehost, as remoteuser, to /this/dir/ on thishost, as th
 I want to make sure that 'rsync' over 'ssh' works at all before I begin to automate the process, so I test it first as thisuser:
 
 $ rsync -avz -e ssh remoteuser@remotehost:/remote/dir /this/dir/ 
+
+
+### ##############################################
+### nmap
+### ##############################################
+
+$ nmap -sn 192.168.0.0/24
+
+-sn, disable port scan
