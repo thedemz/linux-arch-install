@@ -62,6 +62,20 @@ Note:
         vim /var/cache/pacman/pkg
         pacman -U /var/cache/pacman/pgg/linux-4.1.4-1-x86_64.pkg.tar.xz /var/cache/pacman/pgg/linux-headers-4.1.4-1-x86_64.pkg.tar.xz
 
+        Vi0L0 wrote:
+        Works fine @ 4.1.6-ARCH on x86_64 here. I'm pretty sure I also tested 4.1.5 when it was released, but latelly I'm often reinstalling catalyst-hook so could miss[1]
+        Maybe there was some problem with auto-rebuild. Check daemon status with:
+        
+        systemctl status catalyst-hook.service 
+        
+        It should be "active (exited)", if it's dead then enable it. If it's not dead then it means that md5 sum of modver of kernels 4.1.4 and 4.1.5 is the same - hard to believe but possible[1] Edit: just checked, it was different.
+        Anyhow to force fix: update to newer kernel, and as root run:
+        
+        catalyst_build_module all
+
+
+
+/etc/pacman.conf
 
 [xorg116]
 Server = http://catalyst.wirephire.com/repo/xorg116/$arch
