@@ -1,0 +1,57 @@
+Test if single mode is able to start
+Single user mode drops you into a root shell after booting minimally
+
+#If you cannot boot due to errors caused by a daemon, faulty fstab, display manager or Xorg,
+#you may be able to use the single user runlevel to fix your problem.
+
+#Since Arch uses systemd, you do this by appending systemd.unit=rescue.target to the kernel parameters.
+#If that does not work for whatever reason (e.g. the rescue target depends on a target that fails),
+#you can instantly drop to a root shell by adding init=/bin/sh to the kernel parameters.
+
+### ######################################
+### Single Mode Using GRUB2
+### ######################################
+
+To boot into single user mode you edit the boot instructions for the GRUB menu entry you wish to boot and add the kernel parameter/option single. Brief instructions for how to do this are below.
+
+Select (highlight) the GRUB boot menu entry you wish to use.
+Press e to edit the GRUB boot commands for the selected boot menu entry.
+Look near the bottom of the list of commands for lines similar to
+
+linux /boot/vmlinuz-3.2.0-24-generic root=UUID=bc6f8146-1523-46a6-8b\ 
+6a-64b819ccf2b7 ro  quiet splash 
+initrd /boot/initrd.img-3.2.0-24-generic
+
+Change the middle line in (3) by adding the kernel boot parameter single to the end of the line (i.e. after ro  quiet splash).
+
+For this example you would change 
+6a-64b819ccf2b7 ro  quiet splash 
+to 
+6a-64b819ccf2b7 ro  quiet splash single
+
+Press either Ctrl+X or F10 to boot using these kernel options.
+
+Note: These changes are not persistent.
+Any change to the kernel boot options made this way will only affect the next boot and only if you start that boot by pressing either Ctrl+X or F10 while still in GRUB edit mode.
+
+### #########################################
+### Check the systemd log
+### #########################################
+
+$ journalctl -xb
+
+### #########################################
+### Mount and Downgrade
+### #########################################
+
+#Mount Arch Installation
+
+$ fdisk -l
+
+$ mount /dev/sda2 /mnt
+$ mount /dev/sda1 /mnt/boot/efi
+
+$ arch-chroot /mnt /bin/bash    # arch-chrott does, mount -t proc none /mnt/proc, chroot /mnt /bin/bash
+
+# Then Downgrade package, see working-with-pacman
+
