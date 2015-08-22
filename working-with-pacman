@@ -1,0 +1,11 @@
+Check Linux Kernel Version
+
+$ pacman -Qi linux
+
+Check cached packages
+
+$ vim /var/cache/pacman/pkg
+
+Downgrade Kernel
+
+$ pacman -U /var/cache/pacman/pkg/linux-1.4.1-1-x86_64.pkg.tar.xz /var/cache/pacman/pkg/linux-headers-1.4.1-1-x86_64.pkg.tar.xz
