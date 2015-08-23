@@ -1,10 +1,21 @@
 Install the packages
 
-postfix
-openssl
+$ sudo pacman -S openssl postfix
 
 Set up DNS record for email.
 
 An MX record should point to the mail host. Usually this is done from configuration interface of your domain provider.
 A mail exchanger record (MX record) is a type of resource record in the Domain Name System that specifies a mail server responsible for accepting email messages on behalf of a recipient's domain.
 When an e-mail message is sent through the Internet, the sending mail transfer agent queries the Domain Name System for MX records of each recipient's domain name. This query returns a list of host names of mail exchange servers accepting incoming mail for that domain and their preferences. The sending agent then attempts to establish an SMTP connection to one of these servers, starting with the one with the smallest preference number, delivering the message to the first server with which a connection can be made.
+
+
+Run the command:
+$ postfix check
+
+It should output anything that you might have done wrong in a config file.
+
+To see all of your configs, type
+
+$ postconf
+
+To see how you differ from the defaults, try postconf -n.
