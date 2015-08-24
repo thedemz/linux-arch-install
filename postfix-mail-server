@@ -1,13 +1,43 @@
-Install the packages
-
+### ##########################################
+### Install the packages
+### ##########################################
 $ sudo pacman -S openssl postfix
 
-Set up DNS record for email.
+### ##########################################
+### Set up DNS record for email.
+### ##########################################
+
+A records
+
+@       example.com
+mail    @
+www     @
+
+MX records
+
+10      mail.example.com
 
 An MX record should point to the mail host. Usually this is done from configuration interface of your domain provider.
 A mail exchanger record (MX record) is a type of resource record in the Domain Name System that specifies a mail server responsible for accepting email messages on behalf of a recipient's domain.
 When an e-mail message is sent through the Internet, the sending mail transfer agent queries the Domain Name System for MX records of each recipient's domain name. This query returns a list of host names of mail exchange servers accepting incoming mail for that domain and their preferences. The sending agent then attempts to establish an SMTP connection to one of these servers, starting with the one with the smallest preference number, delivering the message to the first server with which a connection can be made.
 
+### #########################################
+### Create a daemon owner, the postfix user
+### #########################################
+
+#sudo useradd -d /dev/null -s /sbin/nologin username
+#Creates a user who's home directory = /dev/null
+#And who's login = /sbin/nologin
+#Therefore user won't have a home directory and can't login to shell.
+
+$ sudo useradd -d /dev/null -s /sbin/nologin postfix
+
+### #########################################
+### Postfix setup
+### #########################################
+
+/etc/postfix/main.cf    #this is the main config file.
+/etc/postfix/master.cf  #global settings.
 
 Run the command:
 $ postfix check
@@ -20,4 +50,4 @@ $ postconf
 
 To see how you differ from the defaults, try postconf -n.
 
-sudo systemctl restart postfix.service
+$ sudo systemctl restart postfix.service
