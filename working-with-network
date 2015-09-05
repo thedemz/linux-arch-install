@@ -72,3 +72,27 @@ $ rsync -avz -e ssh remoteuser@remotehost:/remote/dir /this/dir/
 $ nmap -sn 192.168.0.0/24
 
 -sn, disable port scan
+
+
+
+### ##############################################
+### List open ports and process
+### ##############################################
+
+Socket statistics, or ss for short,
+is an easy replacement command for netstat.
+
+One way to use it, is with parameters
+
+$ ss -aut
+
+-a: show listening and non-listening sockets
+-u: show UDP
+-t: show TCP
+
+
+
+
+
+
+
