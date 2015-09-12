@@ -66,5 +66,12 @@ $   git remote -v
 
 
 
+$   git log --oneline -5 --author martin --before "Fri Mar 26 2009"
+
+
+
+
+
+
 
 
