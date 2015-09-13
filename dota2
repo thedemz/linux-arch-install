@@ -14,7 +14,23 @@ Arial is the font that Dota can't find and messes up your UI.
 So, the workaround is to copy that file to the Dota font directory
 or create it if you don't have it. Here's a copy of my file if you need it:
 
-http://pastie.org/10270268
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fontconfig SYSTEM "../fonts.dtd">
+<fontconfig>
+         <!-- Microsoft -->
+        <alias binding="same">
+          <family>Arial</family>
+            <accept>
+              <family>Liberation Sans</family>
+            </accept>
+        </alias>
+        <alias binding="same">
+          <family>Liberation Sans</family>
+            <default>
+              <family>Arial</family>
+            </default>
+        </alias>
+</fontconfig>
 
 You can just copy-paste that and save it as
 
