@@ -55,3 +55,25 @@ $ arch-chroot /mnt /bin/bash    # arch-chroot does, mount -t proc none /mnt/proc
 
 # Then Downgrade package, see working-with-pacman
 
+### #########################################
+### Enable wired internet if down
+### #########################################
+
+# First find the name of the ethernet host
+
+$ ip addr
+
+# Enable the ethernet host
+
+$ dhcpd enp3s0
+
+# Test internet connection
+
+$ ping -c 3 www.google.com
+
+### ##########################################
+### Recreate the grub.cfg file
+### ##########################################
+
+$ grub-mkconfig -o /boot/grub/grub.cfg
+
