@@ -77,3 +77,34 @@ $ ping -c 3 www.google.com
 
 $ grub-mkconfig -o /boot/grub/grub.cfg
 
+
+### ##########################################
+### Errors and command for details
+### ##########################################
+
+[FAILED] Failed to mount /boot/efi
+
+Occur after kernel update.
+
+This is a frequent problem on UEFI systems that aren't set up
+correctly.
+
+The kernel you are booting with does not match the modules
+installed to /usr, because the kernel your boot manager is loading is
+an older one.
+
+The new kernel was installed elsewhere, and was not
+copied to the correct location. !!!
+
+Check your fstab and see where you are mounting your ESP.
+
+Remember that the linux package installs the kernel to /boot/vmlinuz-linux.
+
+If /boot is your ESP, check where your boot manager loads the kernel from.
+
+If your boot manager uses an absolute path, remember that / (or \)
+will be the root of the ESP, not your arch partition.
+
+$ systemctl status boot-efi.mount
+
+
