@@ -65,7 +65,7 @@ $ ip addr
 
 # Enable the ethernet host
 
-$ dhcpd enp3s0
+$ dhcpcd enp3s0
 
 # Test internet connection
 
@@ -114,3 +114,7 @@ Modify your fstab to mount your ESP to /boot instead of /boot/efi,
 and you shouldn't get this problem the next time you update the linux package.
 
 https://bbs.archlinux.org/viewtopic.php?id=180056
+
+
+
+
