@@ -108,3 +108,9 @@ will be the root of the ESP, not your arch partition.
 $ systemctl status boot-efi.mount
 
 
+Sollution? 
+
+Modify your fstab to mount your ESP to /boot instead of /boot/efi,
+and you shouldn't get this problem the next time you update the linux package.
+
+https://bbs.archlinux.org/viewtopic.php?id=180056
