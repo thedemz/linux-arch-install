@@ -82,7 +82,7 @@ $ grub-mkconfig -o /boot/grub/grub.cfg
 ### Errors and command for details
 ### ##########################################
 
-[FAILED] Failed to mount /boot/efi
+### [FAILED] Failed to mount /boot/efi
 
 Occur after kernel update.
 
@@ -122,3 +122,15 @@ since this allows pacman to directly update the kernel that the EFI firmware wil
 https://wiki.archlinux.org/index.php/EFISTUB#Mkinitcpio_hook
 
 
+### GNOME3: "Oh No! Something has gone wrong" screen
+
+If the user session was set to use gnome-fallback, when you log in you'll get the error.
+This is because there is no longer a fallback mode in gnome 3.8.
+
+Sollution?
+
+Set the session back to gnome
+
+$ gsettings set org.gnome.desktop.session session-name gnome
+
+http://forums.fedoraforum.org/showthread.php?t=292940
