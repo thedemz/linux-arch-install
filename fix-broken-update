@@ -115,6 +115,10 @@ and you shouldn't get this problem the next time you update the linux package.
 
 https://bbs.archlinux.org/viewtopic.php?id=180056
 
+After creating the EFI System Partition, you must choose how it will be mounted.
+The simplest option is to mount it at /boot,
+since this allows pacman to directly update the kernel that the EFI firmware will read.
 
+https://wiki.archlinux.org/index.php/EFISTUB#Mkinitcpio_hook
 
 
