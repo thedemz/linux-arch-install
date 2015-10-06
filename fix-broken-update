@@ -49,7 +49,12 @@ $ journalctl -xb
 $ fdisk -l
 
 $ mount /dev/sda2 /mnt
-$ mount /dev/sda1 /mnt/boot/efi
+
+# Depending on the $esp location, $esp=/boot
+
+$ mount /dev/sda1 /mnt/boot
+
+# Or maybee $ mount /dev/sda1 /mnt/boot/efi
 
 $ arch-chroot /mnt /bin/bash    # arch-chroot does, mount -t proc none /mnt/proc, chroot /mnt /bin/bash
 
