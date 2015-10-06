@@ -126,18 +126,31 @@ For example:
     
 $   fdisk -l
 
-2. Mount the partitions. First the main storage partition then the boot partition.
+2. Mount the partitions. First the main storage partition then the boot partition referred as the $esp.
 
 $   mount /dev/sda2 /mnt
 
+#Note:  For both BIOS and UEFI system mount the boot like
+
 $   mkdir /mnt/boot
-$   mkdir /mnt/boot/efi
+$   mount /dev/sda1 /mnt/boot
 
-$   mount /dev/sda1 /mnt/boot/efi
+#NOTE:
 
-    #Note:  for BIOS system mount the boot like, the efi folder is just a standard for UEFI.
-    #$      mount /dev/sda1 /mnt/boot
-    
+#If the $esp location is other than /boot then you need to set up a copy hook when
+#pacman updates the kernel in the future. https://wiki.archlinux.org/index.php/EFISTUB
+#The efi folder is just a standard namin convention for UEFI (Not Mandatory!)
+
+#   $   mkdir /mnt/boot/efi
+#   $   mount /dev/sda1 /mnt/boot/efi
+
+#The simplest option is to mount it at /boot, since this allows pacman to directly
+#update the kernel that the EFI firmware will read.
+
+#If you mount the EFI System Partition, the $esp location, elsewhere than /boot (such as /boot/efi),
+#you will need to copy boot files to that location after a kernel update.
+
+
 3. Check that there is an internet connection.
 
 $   ping -c 3 www.google.com
@@ -198,7 +211,17 @@ $   mount -t efivarfs efivarfs /sys/firmware/efi/efivars
     
 $   pacman -S grub efibootmgr
 
-$   grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
+#NOTE:
+# http://lists.gnu.org/archive/html/help-grub/2012-12/msg00025.html
+# --efi-directory=/boot/efi on UEFI system is just established convention.
+# grub-install will search through several likely locations and /boot/efi
+# is one of them. The ESP can be given directly as --efi-directory, the $esp path.
+# grub-install simply looks for /boot/efi, /boot/EFI and is using root
+# directory as last resort if it is FAT. That's all. I would not call
+# this "automatic" - someone has to mount /boot/efi first and this is
+# manual step.
+
+$   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch --recheck --debug
 
     #Note:  If success this is the output.
 
