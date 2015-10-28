@@ -51,43 +51,50 @@ even above your catalyst repository, should you use one.
 
 In order to use these repositories, you will have to add them to /etc/pacman.conf,
 as explained in pacman#Repositories.
+
 If a repository is signed, you will have to obtain and locally sign the associated key,
 as explained in Pacman-key#Adding unofficial keys.
 
 Unofficial user repository:
-        catalyst
-        Maintainer: Vi0l0
-        Description: ATI Catalyst proprietary drivers.
-        Upstream Page: http://catalyst.wirephire.com
-        Key-ID: 653C3094
-        [catalyst]
-        Server = http://catalyst.wirephire.com/repo/catalyst/$arch
-        ## Mirrors, if the primary server does not work or is too slow:
-        #Server = http://70.239.162.206/catalyst-mirror/repo/catalyst/$arch
-        #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/catalyst/$arch
-        #Server = http://mirror.hactar.bz/Vi0L0/catalyst/$arch
+
+    catalyst
+    Maintainer: Vi0l0
+    Description: ATI Catalyst proprietary drivers.
+    Upstream Page: http://catalyst.wirephire.com
+    Key-ID: 653C3094
+    [catalyst]
+    Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+    ## Mirrors, if the primary server does not work or is too slow:
+    #Server = http://70.239.162.206/catalyst-mirror/repo/catalyst/$arch
+    #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/catalyst/$arch
+    #Server = http://mirror.hactar.bz/Vi0L0/catalyst/$arch
 
 
 Note: 
 
-        using xorg116         #Catalyst does Not! support xorg-server 1.17
-        using kernel 4.1.4-1  #Catalyst does Not! support kernel 4.1.5-1
+    using xorg116         #Catalyst does Not! support xorg-server 1.17
+    
+    using kernel 4.1.4-1  #YES
+    using kernel 4.1.5-1  #YES
+    
+    Downgrading Kernel:
+    
+    vim /var/cache/pacman/pkg
+    pacman -U /var/cache/pacman/pgg/linux-4.1.4-1-x86_64.pkg.tar.xz /var/cache/pacman/pgg/linux-headers-4.1.4-1-x86_64.pkg.tar.xz
 
-        Downgrading Kernel:
-        
-        vim /var/cache/pacman/pkg
-        pacman -U /var/cache/pacman/pgg/linux-4.1.4-1-x86_64.pkg.tar.xz /var/cache/pacman/pgg/linux-headers-4.1.4-1-x86_64.pkg.tar.xz
-
-        Vi0L0 wrote:
-        Works fine @ 4.1.6-ARCH on x86_64 here. I'm pretty sure I also tested 4.1.5 when it was released, but latelly I'm often reinstalling catalyst-hook so could miss[1]
-        Maybe there was some problem with auto-rebuild. Check daemon status with:
-        
-        systemctl status catalyst-hook.service 
-        
-        It should be "active (exited)", if it's dead then enable it. If it's not dead then it means that md5 sum of modver of kernels 4.1.4 and 4.1.5 is the same - hard to believe but possible[1] Edit: just checked, it was different.
-        Anyhow to force fix: update to newer kernel, and as root run:
-        
-        catalyst_build_module all
+    Vi0L0 wrote:
+    Works fine @ 4.1.6-ARCH on x86_64 here.
+    I'm pretty sure I also tested 4.1.5 when it was released,
+    
+    Maybe there was some problem with auto-rebuild. Check daemon status with:
+    
+    $ sudo systemctl status catalyst-hook.service 
+    
+    It should be "active (exited)", if it's dead then enable it.
+    
+    Anyhow to force fix: update to newer kernel, and as root run:
+    
+    $ sudo catalyst_build_module all
 
 
 
