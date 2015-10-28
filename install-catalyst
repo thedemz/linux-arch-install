@@ -1,4 +1,20 @@
+Update 2015-10-28
+
+Only catalyst-test@AUR is implementing workaround: https://aur4.archlinux.org/packages/catalyst-test/
+A workaround for linux kernel 4.2 support.
+It was found by Billy Way on launchpad and announced here: http://ati.cchtml.com/show_bug.cgi?id=1189
+
+fglrx module needs to be build on gcc 4.9.x (or < 5) to work on linux 4.2
+
+Install gcc49@AUR : https://aur.archlinux.org/packages/gcc49/
+
+Kernel: linux-lts
+Xorg Server: 1.18
+
+------------------------------------------------
+
 https://bbs.archlinux.org/viewtopic.php?id=57084
+https://wiki.archlinux.org/index.php/User:Vi0L0
 
 AMD Radeon™ R9 290 Series
 AMD Radeon™ R9 280 Series
