@@ -48,7 +48,9 @@ $   wget http://www.bchemnet.com/suldr/driver/UnifiedLinuxDriver-1.00.06.tar.gz
 
 or
 
-$   wget http://org.downloadcenter.samsung.com/downloadfile/ContentsFile.aspx?CDSite=UNI_DE&CttFileID=5506927&CDCttType=DR&ModelType=N&ModelName=SL-M2070W&VPath=DR/201307/20130726185233290/M2070_Linux_V1.00.06.gz
+###$   wget http://org.downloadcenter.samsung.com/downloadfile/ContentsFile.aspx?CDSite=UNI_DE&CttFileID=5506927&CDCttType=DR&ModelType=N&ModelName=SL-M2070W&VPath=DR/201307/20130726185233290/M2070_Linux_V1.00.06.gz
+
+$   wget http://org.downloadcenter.samsung.com/downloadfile/ContentsFile.aspx?CDSite=UNI_SE&CttFileID=6284327&CDCttType=DR&ModelType=N&ModelName=SL-M2070&VPath=DR/201510/20151027161527467/uld_v1.00.36_00.91.tar.gz
 
 $   tar -zxvf M2070_Linux_V1.00.06.gz
 
