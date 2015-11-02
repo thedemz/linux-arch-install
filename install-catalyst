@@ -9,7 +9,7 @@ fglrx module needs to be build on gcc 4.9.x (or < 5) to work on linux 4.2
 Install gcc49@AUR : https://aur.archlinux.org/packages/gcc49/
 
 Kernel: linux-lts
-Xorg Server: 1.18
+Xorg Server: 1.17
 
 ------------------------------------------------
 
