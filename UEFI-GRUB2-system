@@ -366,11 +366,13 @@ $   lspci | grep VGA
 
 $   pacman -Ss xf86-video | less
 
-5. Install vesa driver and intel driver.
+5. Install vesa driver | intel driver | ati driver.
 
 $   pacman -S xf86-video-vesa
 
 $   pacman -S xf86-video-intel
+
+$   xf86-video-ati
 
 6.  Install some basic X applications.
 
