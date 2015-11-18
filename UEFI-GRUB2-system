@@ -352,7 +352,7 @@ $   visudo
 
 1. Install X.
 
-$   pacman -S xorg-server-utils xorg-xinit
+$   pacman -S xorg-server xorg-server-utils xorg-xinit xterm
 
 2. Install mesa graphics driver.
 
@@ -378,9 +378,9 @@ $   pacman -S xf86-video-intel
 
 $   pacman -S xf86-video-ati
 
-6.  Install some basic X applications.
-
-$   pacman -S xorg-twm xorg-xclock xterm
+##6.  Install some basic X applications.
+##
+##$   pacman -S xorg-twm xorg-xclock xterm
 
 7X. If Xorg was installed before creating the non-root user
     there will be a template .xinitrc file in your home directory
