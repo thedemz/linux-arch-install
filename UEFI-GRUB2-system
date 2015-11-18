@@ -376,7 +376,7 @@ $   pacman -S xf86-video-vesa
 
 $   pacman -S xf86-video-intel
 
-$   xf86-video-ati
+$   pacman -S xf86-video-ati
 
 6.  Install some basic X applications.
 
