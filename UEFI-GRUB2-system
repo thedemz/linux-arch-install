@@ -368,6 +368,10 @@ $   pacman -Ss xf86-video | less
 
 5. Install vesa driver | intel driver | ati driver.
 
+#NOTE:  The default graphics driver is xf86-video-vesa, which handles a large number of chipsets
+#       but does not include any 2D or 3D acceleration.
+#       If a better driver cannot be found or fails to load, Xorg will fall back to vesa.
+
 $   pacman -S xf86-video-vesa
 
 $   pacman -S xf86-video-intel
