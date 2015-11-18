@@ -1,0 +1,9 @@
+### =======================================
+### Firefox
+### =======================================
+
+$ pacman -S firefox
+
+$ pacman -S f gst-libav gst-plugins-good
+
+Now Firefox will have h.264 support and Youtube will stream h.264 video by default.
