@@ -162,8 +162,9 @@ $   pacstrap /mtn base
     #Note:  It is actually Grub2 that is installed.
     
 $   pacstrap /mnt grub-efi-x86_64
+$   pacstrap /mnt efibootmgr
 
-    #Note:  For BIOS system the command for grub is
+    #Note:  For BIOS system the grub package is just,
     #$      pacstrap /mnt grub
     
 5. Create a file system table.
@@ -208,8 +209,8 @@ $   grub-mkconfig -o /boot/grub/grub.cfg
 $   mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 
     #Note: efibootmgr is only necesary for UEFI system
-    
-$   pacman -S grub efibootmgr
+    #If not installed do,
+    #$   pacman -S grub efibootmgr
 
 #NOTE:
 # http://lists.gnu.org/archive/html/help-grub/2012-12/msg00025.html
@@ -227,7 +228,7 @@ $   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch 
 
 >   Installation finished. No error reported
 
-    #Note:  For BIOS sytem 32 or 64 bit the grub-install command is
+    #Note:  For BIOS system 32 or 64 bit the grub-install command is
     #$      grub-install --target=i386-pc --recheck --debug /dev/sdX
     #       where sdX is the disk where the /boot partition is mounted. In this guide it is /dev/sda
 
