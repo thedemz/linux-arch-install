@@ -2,6 +2,11 @@
 ### zshell
 ### #####################################
 
+Change default shell to zshell
+
+$ chsh -s /usr/bin/zsh
+
+
 since version 4.3.6-dev-0+20080921-1
 
 zsh contains the vcs_info subsystem developed by Frank Terbeck.
