@@ -1,0 +1,12 @@
+DIABLO 3
+
+pacman -S playonlinux
+pacman -S lib32-libldap
+
+install 32 bit graphics drivers also. Radeon cards kinda works bad in wine.
+
+make sure dbghelp is disabled.
+
+Type winecfg in the terminal then go to the libraries tab and type dbghelp in the New override for library box.
+Click Add. When you do, a warning will appear, accept the warning and then edit your new override to disabled,
+and then hit Apply.
