@@ -141,3 +141,19 @@ the surround encoding in two channels, you can use this output configuration:
       }
 
 
+
+
+### #################################################
+### Pulse Audio
+### #################################################
+
+Instead of removing pulseaudio you can also stop if from auto-restarting and simply killing it of
+with an auto-starter each time you login.
+
+$ echo autospawn = no|tee -a ~/.pulse/client.conf
+$ killall pulseaudio
+
+After that, simply put killall plulseaudio into your autostart.
+You still need the alsa-mixer stuff and totem/audio-preview are also broken.
+but it’s quite useful for when you want to temporarily switch to alsa or any other sound system.
+
