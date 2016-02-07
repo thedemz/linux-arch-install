@@ -139,3 +139,22 @@ Set the session back to gnome
 $ gsettings set org.gnome.desktop.session session-name gnome
 
 http://forums.fedoraforum.org/showthread.php?t=292940
+
+
+### =============================================================
+### *ERROR* PCH transcoder A FIFO underrun
+### =============================================================
+
+install lates micro code
+
+$ sudo pacman -S intel-ucode
+
+install linux-lts kernel
+
+$ sudo pacman -S linux-lts
+
+update grub config
+
+$ sudo pacman grub-mkconfig -o /boot/grub/grub.cfg
+
+
