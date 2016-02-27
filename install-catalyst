@@ -1,3 +1,18 @@
+### ===================================
+### Find videocard info
+### ===================================
+
+1. Find video cards
+
+$ sudo lspci -v | grep -i vga
+
+2. Find ram size
+
+$ sudo dmesg | grep drm
+
+
+
+
 Update 2015-10-28
 
 Only catalyst-test@AUR is implementing workaround: https://aur4.archlinux.org/packages/catalyst-test/
