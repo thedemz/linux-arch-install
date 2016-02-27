@@ -10,7 +10,7 @@ $ sudo lspci -v | grep -i vga
 
 $ sudo dmesg | grep drm
 
-
+[drm] Detected VRAM RAM=4096M, BAR=256M
 
 
 Update 2015-10-28
