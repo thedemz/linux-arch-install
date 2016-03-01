@@ -13,7 +13,7 @@ $	pacman -S binutils
 
 Yaourt depends on another AUR package called Package Query which we need to install first.
 
-$	curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
+$	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
 
 $	tar zxvf package-query.tar.gz
 
@@ -23,7 +23,7 @@ $	makepkg -si
 
 Install the tar.xz package you just built with the following command.
 
-$	sudo pacman -U package-query-1.0.1-1-x86_64.pkg.tar.xz
+$	sudo pacman -U package-query-1.8-1-x86_64.pkg.tar.xz
 
 
 ### ===========================================
@@ -32,7 +32,7 @@ $	sudo pacman -U package-query-1.0.1-1-x86_64.pkg.tar.xz
 
     #Source: http://archlinux.fr/yaourt-en
 
-$	curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
+$	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
 
 $	tar zxvf yaourt.tar.gz
 
@@ -42,7 +42,7 @@ $	makepkg -si
 
 Install the tar.xz package you just built with the following command.
 
-$	sudo pacman -U yaourt-1.0.1-1-any.pkg.tar.xz
+$	sudo pacman -U yaourt-1.7-1-any.pkg.tar.xz
 
 $	pacman -Sy yaourt
 
