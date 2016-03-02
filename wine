@@ -1,4 +1,6 @@
-DIABLO 3
+### =======================================
+### DIABLO 3
+### =======================================
 
 pacman -S playonlinux
 pacman -S lib32-libldap
@@ -10,3 +12,46 @@ make sure dbghelp is disabled.
 Type winecfg in the terminal then go to the libraries tab and type dbghelp in the New override for library box.
 Click Add. When you do, a warning will appear, accept the warning and then edit your new override to disabled,
 and then hit Apply.
+
+### =========================================
+### Grim Dawn
+### =========================================
+
+pacman -S wine winetricks
+pacman -S lib32-libldap
+
+https://appdb.winehq.org/objectManager.php?sClass=version&iId=29162
+https://www.winehq.org/pipermail/wine-bugs/2015-November/428425.htmlwget http://techer.pascal.free.fr/download/vcrun2015_Wine-1.7.55.zip
+http://www.dll-files.com/dllindex/dll-files.shtml?mscoree
+
+http://www.gamersonlinux.com/forum/threads/grim-dawn-guide.1032/
+
+
+
+1.  Install with winetricks
+
+download mscoree.dll if it does not exist
+
+Install these before installing steam:
+
+dotnet40
+d3dx9
+msxml3
+vcrun2015
+
+2.  Install steam with winetricks
+    Disable overlay in the settings. So games dont crash.
+
+3. Fix the bugs
+
+Bugs:
+
+Problem: Visual Studio 2015-compiled C++ programs do not run (unimplemented function api-ms-win-crt-runtime-l1-1-0.dll._initialize_onexit_table)
+
+Fix: https://www.winehq.org/pipermail/wine-bugs/2015-November/428425.html   
+
+Download David Techers script and files, will fix it.
+
+Problem: Call from to unimplemented function api-ms-win-crt-math-l1-1-0.dll._except1, aborting
+
+Fix:  Set api-ms-win-crt-math-l1-1-0.dll to native only in winecfg
