@@ -20,6 +20,8 @@ and then hit Apply.
 pacman -S wine winetricks
 pacman -S lib32-libldap
 
+https://wiki.archlinux.org/index.php/Wine#WINEARCH
+
 https://appdb.winehq.org/objectManager.php?sClass=version&iId=29162
 https://www.winehq.org/pipermail/wine-bugs/2015-November/428425.htmlwget http://techer.pascal.free.fr/download/vcrun2015_Wine-1.7.55.zip
 http://www.dll-files.com/dllindex/dll-files.shtml?mscoree
