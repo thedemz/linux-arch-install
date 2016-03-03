@@ -32,7 +32,7 @@ $	sudo pacman -U package-query-1.8-1-x86_64.pkg.tar.xz
 
     #Source: http://archlinux.fr/yaourt-en
 
-$	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+$	curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
 
 $	tar zxvf yaourt.tar.gz
 
