@@ -18,6 +18,26 @@
 
 $   dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx && sync
 
+### Make a GParted Live USB drive ###
+
+The GParted Live CD image can be written directly to a USB flash drive.
+
+Download the GParted Live iso file.
+Insert the USB flash drive your Linux computer and wait a few seconds. Next, from a terminal window run the command:
+
+dmesg
+
+This command queries the device name of the USB flash drive.
+For example, you might find the device name is /dev/sde.
+
+From a terminal window, enter the following command using the gparted .iso file name
+and USB device path you discoved in the previous steps.
+
+For example:
+
+sudo dd if=/path-to-gparted-live.x.y.z-w.iso of=/dev/sde bs=4M; sync
+
+
 ### ######################################
 #A# Setting upp storage partitions
 ### ######################################
