@@ -56,7 +56,7 @@ sudo dd if=/path-to-gparted-live.x.y.z-w.iso of=/dev/sde bs=4M; sync
 #   GUID Partition Table, GPT
     UEFI, post 2014 motherboards.
 
-1,  Check UEFI support.
+1.  Check UEFI support.
 
 $   efivar -l
 
@@ -66,6 +66,8 @@ Thus UEFI is supported.
     #Note:  In case you have a UEFI motherboard and UEFI Boot mode is enabled
     #       the live CD or USB will automatically launch Arch Linux kernel.
 
+
+2.  Check if the live USB was booted as UEFI USB in the BIOS/UEFI menu.
 
 ### ######################################
 ### Partition the storage media.
