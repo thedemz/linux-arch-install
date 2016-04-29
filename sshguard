@@ -1,0 +1,65 @@
+### =========================================
+### About sshguard
+### =========================================
+
+Install the sshguard package.
+
+sshguard works by monitoring /var/log/auth.log, syslog-ng or the systemd journal for failed login attempts.
+
+The ban is then logged to syslog and ends up in /var/log/auth.log, or the systemd journal, if systemd is being used.
+
+To make the ban only affect port 22, simply do not send packets going to other ports through the "sshguard" chain.
+
+You must configure a firewall to be used with sshguard in order for blocking to work. Like iptables.
+
+### =========================================
+### About iptables
+### =========================================
+
+iptables is a systemd service and is started accordingly.
+However, the service won't start unless it finds an /etc/iptables/iptables.rules file,
+which is not provided by the Arch iptables package.
+
+So to start the service for the first time:
+
+$ touch /etc/iptables/iptables.rules
+
+or
+
+$ cp /etc/iptables/empty.rules /etc/iptables/iptables.rules
+
+Then start the iptables.service unit.
+As with other services, if you want iptables to be loaded automatically on boot, you must enable it.
+
+After adding rules via command-line the configuration file is not changed automatically,
+you have to save it manually:
+
+$ iptables-save > /etc/iptables/iptables.rules
+
+If you edit the configuration file manually, you have to reload iptables.
+Or you can load it directly through iptables:
+
+$ iptables-restore < /etc/iptables/iptables.rules
+
+### =================================================
+### Setup sshguard with iptables (a systemd service)
+### =================================================
+
+1. Create a new chain for iptables and sshguard
+
+$ iptables -N sshguard
+$ iptables -A INPUT -p tcp --dport 22 -j sshguard
+$ iptables-save > /etc/iptables/iptables.rules
+
+2. Reload iptables service
+
+$ systemctl reload iptablesd.service
+
+3. Enable and start the sshguard.service.
+
+# NOTE: The provided systemd unit uses a blacklist located at
+# /var/db/sshguard/blacklist.db and pipes journalctl into sshguard for monitoring.
+
+$ systemctl enable sshguard.service
+$ systemctl start sshguard.service
+
