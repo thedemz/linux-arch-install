@@ -31,6 +31,9 @@ $ cp /etc/iptables/empty.rules /etc/iptables/iptables.rules
 Then start the iptables.service unit.
 As with other services, if you want iptables to be loaded automatically on boot, you must enable it.
 
+$ systemctl enable iptables
+$ systemctl start iptables
+
 After adding rules via command-line the configuration file is not changed automatically,
 you have to save it manually:
 
@@ -53,7 +56,7 @@ $ iptables-save > /etc/iptables/iptables.rules
 
 2. Reload iptables service
 
-$ systemctl reload iptablesd.service
+$ systemctl reload iptables
 
 3. Enable and start the sshguard.service.
 
