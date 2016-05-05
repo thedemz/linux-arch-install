@@ -44,6 +44,7 @@ Or you can load it directly through iptables:
 
 $ iptables-restore < /etc/iptables/iptables.rules
 
+
 ### =================================================
 ### Setup sshguard with iptables (a systemd service)
 ### =================================================
@@ -66,3 +67,9 @@ $ systemctl reload iptables
 $ systemctl enable sshguard.service
 $ systemctl start sshguard.service
 
+
+### =================================================
+### Debugging and Errors
+### =================================================
+
+Probably you have updated the kernel but never rebooted the system...
