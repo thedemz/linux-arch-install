@@ -73,3 +73,10 @@ $ systemctl start sshguard.service
 ### =================================================
 
 Probably you have updated the kernel but never rebooted the system...
+
+### =======================================================================
+### How can I view all the addresses that sshguard has blocked to iptables?
+### =======================================================================
+
+$ sudo iptables -nvL sshguard
+
