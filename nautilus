@@ -11,10 +11,11 @@ $ gvfs-mount -l -i
      class: 'device'
      unix-device: '/dev/sdc1'
      uuid: '82DA-D9C7'
+  Mount(0): FAT32 37GB -> file:///run/media/username/usbname
 
 2. Unmount the device:
 
-$ gvfs-mount -u /run/media/<username>/<uuid>
+$ gvfs-mount -u /run/media/username/usbname
 
 3. Check that it is unmounted:
 
