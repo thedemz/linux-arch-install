@@ -19,4 +19,6 @@ $ gvfs-mount -u /run/media/username/usbname
 
 3. Check that it is unmounted:
 
+$ lsblk
+
 $ sudo fdisk -l
