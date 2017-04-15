@@ -1,0 +1,7 @@
+GNOME Wayland run
+
+$ xhost +local:
+
+$ sudo gparted
+
+to be able to run gparted.
