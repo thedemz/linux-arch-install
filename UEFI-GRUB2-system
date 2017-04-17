@@ -152,26 +152,27 @@ $   fdisk -l
 
 $   mount /dev/sda2 /mnt
 
-#Note:  For both BIOS and UEFI system mount the boot like
+#The simplest option is to mount it at /boot, since this allows pacman to directly
+#update the kernel that the EFI firmware will read.
+#For both BIOS and UEFI system mount the boot like:
 
 $   mkdir /mnt/boot
 $   mount /dev/sda1 /mnt/boot
 
-#NOTE:
+#If you mount the EFI System Partition, the $esp location, elsewhere than /boot (such as /boot/efi),
 
+$   mkdir /mnt/boot/efi
+$   mount /dev/sda1 /mnt/boot/efi
+
+#you will need to copy boot files to that location after a kernel update.
 #If the $esp location is other than /boot then you need to set up a copy hook when
 #pacman updates the kernel in the future. https://wiki.archlinux.org/index.php/EFISTUB
-#The efi folder is just a standard namin convention for UEFI (Not Mandatory!)
+#The efi folder is just a standard name convention for UEFI (Not Mandatory!)
 
-#   $   mkdir /mnt/boot/efi
-#   $   mount /dev/sda1 /mnt/boot/efi
-
-#The simplest option is to mount it at /boot, since this allows pacman to directly
-#update the kernel that the EFI firmware will read.
-
-#If you mount the EFI System Partition, the $esp location, elsewhere than /boot (such as /boot/efi),
-#you will need to copy boot files to that location after a kernel update.
-
+# grub-install --target=x86_64-efi --efi-directory=/boot
+# will install on the location /boot/EFI
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi
+# will install on the location /boot/efi/EFI
 
 3. Check that there is an internet connection.
 
