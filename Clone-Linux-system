@@ -18,6 +18,8 @@ https://bbs.archlinux.org/viewtopic.php?id=145025
 ### Local Machine: Hard Drive -> New Hard Drive
 ### ========================================================
 
+Cloned an actively running Arch system.
+
 $ lsblk
 
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
@@ -70,7 +72,7 @@ sdb      8:16   0 465.8G  0 disk
 
 For each partition:
 
-$ rsync -avxHAXW --info=progress2 --numeric-ids / /new-disk/
+$ rsync -avxHAXW --info=progress2 --numeric-ids --exclude='/mnt' / /mnt/slash
 
 The options are:
 
@@ -143,6 +145,8 @@ $ arch-chroot /mnt/slash
 6. Install GRUB2
 
 Then install grub in the Master Boot Record of your hard drive, and update grub config file (with the new uuids…):
+
+$ grub-mkconfig -o /boot/grub/grub.cfg
 
 $ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch --recheck --debug /dev/sdb
 
