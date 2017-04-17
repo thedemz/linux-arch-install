@@ -18,8 +18,19 @@ https://bbs.archlinux.org/viewtopic.php?id=145025
 ### Local Machine: Hard Drive -> New Hard Drive
 ### ========================================================
 
+$ lsblk
 
-1. Partition the target hard drive.
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 119.2G  0 disk 
+├─sda1   8:1    0   512M  0 part /boot/efi
+└─sda2   8:2    0 118.8G  0 part /
+sdb      8:16   0 465.8G  0 disk 
+├─sdb1   8:17   0   512M  0 part 
+└─sdb2   8:18   0 465.3G  0 part 
+
+Clone sda -> sdb
+
+1. Partition the target hard drive. (sdb)
 
 Use a tool like gparted to partition the target hard drive, with the same partitions as your source system (slash, swap, home, ...).
 
@@ -32,21 +43,23 @@ On the system, open a root terminal.
 Then, for each data partition (you can ignore swap):
 
 $ mkdir /mnt/slash
-$ mount /dev/sdaX /mnt/slash
+$ mount /dev/sdb2 /mnt/slash
 
 The boot partition:
 
 $ mkdir /mnt/slash/boot
-$ mount /dev/sdaY /mnt/slash/boot
+$ mount /dev/sdb1 /mnt/slash/boot
 
 If you have a home partition:
 
 $ mkdir /mnt/home
-$ mount /dev/sdaZ /mnt/home
+$ mount /dev/sdbX /mnt/home
 
 3. Transfere the data.
 
-$ sync -avxHAXW --info=progress2 --numeric-ids / /new-disk/
+For each partition:
+
+$ rsync -avxHAXW --info=progress2 --numeric-ids / /new-disk/
 
 The options are:
 
@@ -120,7 +133,7 @@ $ arch-chroot /mnt/slash
 
 Then install grub in the Master Boot Record of your hard drive, and update grub config file (with the new uuids…):
 
-$ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch --recheck --debug /dev/sda
+$ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch --recheck --debug /dev/sdb
 
 $ update-grub
 
