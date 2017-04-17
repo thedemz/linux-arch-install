@@ -1,0 +1,143 @@
+Clone a Linux system install to another computer
+
+The following method should work for any Linux distribution (Ubuntu, Debian, Manjaro, Archlinux, Fedora, ...).
+Source and target systems must be on the same processor architecture (though transfer from 32bit to 64bit should work).
+
+On the target computer, you will need a tool to partition your hard drive, like gparted.
+rsync is also required for data transfer: it’s included in many live systems.
+
+### ========================================================
+### Sources 
+### ========================================================
+
+http://positon.org/clone-a-linux-system-install-to-another-computer
+https://superuser.com/questions/307541/copy-entire-file-system-hierarchy-from-one-drive-to-another
+https://bbs.archlinux.org/viewtopic.php?id=145025
+
+### ========================================================
+### Local Machine: Hard Drive -> New Hard Drive
+### ========================================================
+
+
+1. Partition the target hard drive.
+
+Use a tool like gparted to partition the target hard drive, with the same partitions as your source system (slash, swap, home, ...).
+
+Its recommended to assign LABELs to your partitions: for the fstab, it’s easier than UUIDs.
+
+2. Mount all partitions.
+
+On the system, open a root terminal.
+
+Then, for each data partition (you can ignore swap):
+
+$ mkdir /mnt/slash
+$ mount /dev/sdaX /mnt/slash
+
+The boot partition:
+
+$ mkdir /mnt/slash/boot
+$ mount /dev/sdaY /mnt/slash/boot
+
+If you have a home partition:
+
+$ mkdir /mnt/home
+$ mount /dev/sdaZ /mnt/home
+
+3. Transfere the data.
+
+$ sync -avxHAXW --info=progress2 --numeric-ids / /new-disk/
+
+The options are:
+
+-a  : all files, with permissions, etc..
+-v  : verbose, mention files
+-x  : stay on one file system
+-H  : preserve hard links (not included with -a)
+-A  : preserve ACLs/permissions (not included with -a)
+-X  : preserve extended attributes (not included with -a)
+-W  : Avoids calculating deltas/diffs of the files.
+
+To improve the copy speed, add -W (--whole-file), to avoid calculating deltas/diffs of the files.
+This is the default when both the source and destination are specified as local paths,
+since the real benefit of rsync's delta-transfer algorithm is reducing network usage.
+
+Also consider adding --numeric-ids to avoid mapping uid/gid values by user/group name.
+
+--info=progress2 instead of --progress is useful for large transfers,
+as it gives overall progress, instead of (millions of lines for) individual files.
+
+
+This version is fairly specific to Gnome- and Debian/Ubuntu-based systems, since it includes subdirectories of users' home directories which are specific to Gnome, as well as the APT package cache.
+
+The last line will exclude any directory named cache/Cache/.cache, which may be too aggressive for some uses:
+
+$ rsync -avxHAXW --delete-excluded --info=progress2 --numeric-ids \
+  /mnt/from/ /mnt/to/
+  --exclude='/home/*/.gvfs' \
+  --exclude='/home/*/.local/share/Trash' \
+  --exclude='/var/run/*' \
+  --exclude='/var/lock/*' \
+  --exclude='/lib/modules/*/volatile/.mounted' \
+  --exclude='/var/cache/apt/archives/*' \
+  --exclude='/home/*/.mozilla/firefox/*/Cache' \
+  --exclude='/home/*/.cache/chromium'
+  --exclude='home/*/.thumbnails' \
+  --exclude=.cache --exclude Cache --exclude cache
+
+4. Adjust fstab
+
+Adjust fstab and menu.lst to point to the new partitions
+
+As root, edit /mnt/slash/etc/fstab
+
+For each partition (including swap), replace the first field with the new UUID or LABEL (it’s straightforward with LABELs):
+UUID=the-long-uuid, or LABEL=yourlabel
+
+2 ways to get the UUIDs / LABELs:
+
+$ ls -l /dev/disk/by-uuid/
+$ blkid /dev/sdaX
+
+5. Chroot into the new drive
+
+Use a chroot (changed root environment) to be able to call the grub install inside the migrated system.
+
+First, bind mount some system directories needed by grub, then chroot:
+
+$ mount --bind /proc /mnt/slash/proc
+$ mount --bind /sys /mnt/slash/sys
+$ mount --bind /dev /mnt/slash/dev
+$ mount --bind /run /mnt/slash/run
+
+$ chroot /mnt/slash
+
+On arch-linux:
+
+$ arch-chroot /mnt/slash
+
+6. Install GRUB2
+
+Then install grub in the Master Boot Record of your hard drive, and update grub config file (with the new uuids…):
+
+$ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch --recheck --debug /dev/sda
+
+$ update-grub
+
+7. Regenerate the initramfs
+
+$ mkinitcpo -p linux
+
+8. Exit the arch-root user.
+
+$   exit
+
+9. Unmount the storage media.
+
+    #Note:  The spelling for the command is U M O U N T
+    
+$   umount -R /mnt/slash
+
+10. Reboot the computer with the systemd command.
+
+$   systemctl reboot
