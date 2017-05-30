@@ -5,3 +5,11 @@ $ xhost +local:
 $ sudo gparted
 
 to be able to run gparted.
+
+
+
+### Reformat USB
+
+gparted will run the command:
+
+$ mkfs.fat -F32 -v -l -n /dev/sdc
