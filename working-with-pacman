@@ -26,3 +26,14 @@ linux-4.2.2-1-x86_64.pkg.tar.xz
 linux-lts-4.1.8-1-x86_64.pkg.tar.xz
 linux-lts-4.1.9-2-x86_64.pkg.tar.xz
 
+Check dependencies of a package:
+
+$ pacman -Qi <packagename>
+
+Check dependencies of a package:
+
+$ pacman -Qtd <packagename>
+
+Remove a package:
+
+$ pacman -R <packagename>
