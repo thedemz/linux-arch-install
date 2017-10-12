@@ -28,12 +28,52 @@ linux-lts-4.1.9-2-x86_64.pkg.tar.xz
 
 Check dependencies of a package:
 
-$ pacman -Qi <packagename>
+$ pacman -Qi package_name
 
 Check dependencies of a package:
 
-$ pacman -Qtd <packagename>
+$ pacman -Qtd package_name
 
 Remove a package:
 
-$ pacman -R <packagename>
+$ pacman -R package_name
+
+To search for already installed packages:
+
+$ pacman -Qs string1 string2 ...
+
+To display extensive information about a given package:
+
+$ pacman -Si package_name
+
+For locally installed packages:
+
+$ pacman -Qi package_name
+
+Passing two -i flags will also display the list of backup files and their modification states:
+
+$ pacman -Qii package_name
+
+To retrieve a list of the files installed by a package:
+
+$ pacman -Ql package_name
+
+For packages not installed, use pkgfile.
+
+To verify the presence of the files installed by a package:
+
+$ pacman -Qk package_name
+
+Passing the k flag twice will perform a more thorough check.
+
+One can also query the database to know which package a file in the file system belongs to:
+
+$ pacman -Qo /path/to/file_name
+
+To list all packages no longer required as dependencies (orphans):
+
+$ pacman -Qdt
+
+To list all packages explicitly installed and not required as dependencies:
+
+$ pacman -Qet
