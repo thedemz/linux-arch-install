@@ -68,6 +68,12 @@ command | grep pattern – search for pattern in the
 output of command
 locate file – find all instances of file
 
+
+# Find files between datetime and do command
+
+find . -newermt "YYYY-MM-DD 00:00" ! -newermt "YYYY-MM-DD 24:00" -ls
+find . -newermt "YYYY-MM-DD 00:00" ! -newermt "YYYY-MM-DD 24:00" -delete
+
 ### ##############################
 ### System Info
 ### ##############################
