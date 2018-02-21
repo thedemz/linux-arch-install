@@ -2,8 +2,10 @@ Nautilus uses gvfs-mount to mount and unmount.
 
 1. Find the usb device:
 
-$ gvfs-mount -l -i
+# DEPRICATED
+# $ gvfs-mount -l -i
 
+$ gio mount -l -i
   ...
   Volume(0): FAT32 37GB
     Type: GProxyVolume (GProxyVolumeMonitorUDisks2)
@@ -15,7 +17,10 @@ $ gvfs-mount -l -i
 
 2. Unmount the device:
 
-$ gvfs-mount -u /run/media/username/usbname
+# DEPRICATED
+# $ gvfs-mount -u /run/media/username/usbname
+
+$ gio mount -u /run/media/username/usbname
 
 3. Check that it is unmounted:
 
