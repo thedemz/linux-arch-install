@@ -1,0 +1,20 @@
+### FAT32 USB ARCHLINUX ###
+
+Download .iso from archlinux.org
+
+sha1sum archlinux.iso
+
+sudo pacman -S dosfstools
+
+sudo fdisk -l
+
+sudo umount /dev/sdc1
+
+sudo mkfs.vfat /dev/sdc1 - n ARCHLINUX
+
+# Now create the runable usb from the .iso file
+
+# replacing /dev/sdx with your drive, e.g. /dev/sdb.
+  (do not append a partition number, so do not use something like /dev/sdb1)
+
+dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx && sync
