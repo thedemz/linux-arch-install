@@ -1,89 +1,60 @@
-############################################
-###   Installing a Arch Linux System
+#### ===================================================================
+
+    Checklist:
 
     UEFI Motherboard
     64 bit x86 CPU
-    Normal spinning disk    
-    GPT Partition
+    GPT Partition: 512 fat32 with boot and esp flag set. For GRUB2.
     GRUB 2
-    GNOME 3
     Wired connection
-    
-############################################
+    BIOS Secure Boot disabled
+    archlinux.iso on USB
 
-### Make a Arch Linux USB drive ###
+#### ===================================================================
 
-#   replacing /dev/sdx with your drive, e.g. /dev/sdb.
+    Make a Arch Linux USB drive
+
+    lsusb
+    dmesg
+    fdisk -l
+
     (do not append a partition number, so do not use something like /dev/sdb1)
 
-$   dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx && sync
+    umount before!
 
-### Make a GParted Live USB drive ###
+    dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx && sync
 
-The GParted Live CD image can be written directly to a USB flash drive.
+#### ===================================================================
 
-Download the GParted Live iso file.
-Insert the USB flash drive your Linux computer and wait a few seconds. Next, from a terminal window run the command:
+    Make a GParted Live USB drive
 
-dmesg
+    sudo dd if=/path-to-gparted-live.x.y.z-w.iso of=/dev/sde bs=4M; sync
 
-This command queries the device name of the USB flash drive.
-For example, you might find the device name is /dev/sde.
-
-From a terminal window, enter the following command using the gparted .iso file name
-and USB device path you discoved in the previous steps.
-
-For example:
-
-sudo dd if=/path-to-gparted-live.x.y.z-w.iso of=/dev/sde bs=4M; sync
-
-
-### ######################################
-#A# Setting upp storage partitions
-### ######################################
-
-### ######################################
-### Check supported boot methods.
+#### ===================================================================
     
+    The old BIOS boot table, pre 2013 motherboards.
+    Master Boot Record - MBR
+
+    UEFI, post 2014 motherboards.
+    Can use the GUID Partition Table - GPT
+
     Check if the motherboard supports UEFI.
 
-### ######################################
+    efivar -l
 
-#   Master Boot Record, MBR
-    The old BIOS boot table, pre 2013 motherboards.
+    If efivar lists the UEFI variables properly, then you have booted in UEFI mode.
 
-
-#   GUID Partition Table, GPT
-    UEFI, post 2014 motherboards.
-
-1.  Check UEFI support.
-
-$   efivar -l
-
-If efivar lists the uefi variables properly, then you have booted in UEFI mode.
-Thus UEFI is supported.
-
-    #Note:  In case you have a UEFI motherboard and UEFI Boot mode is enabled
-    #       the live CD or USB will automatically launch Arch Linux kernel.
-
-
-2.  Check if the live USB was booted as UEFI USB in the BIOS/UEFI menu.
-
-### ######################################
-### Partition the storage media.
-### ######################################
-
-On a computer with a newer EFI rather than a BIOS:
-
-    boot loaders are not stored:
+#### ===================================================================
     
-        in the MBR,
+    Boot Partition for GRUB
+
+    Boot loaders reside as ordinary files on a FAT partition known as the EFI System Partition - ESP
+
+    EFI boot loaders are not stored:
+    
+        in the Master Boot Record - MBR,
         in officially-unallocated post-MBR sectors,
-        or in BIOS Boot Partitions;
-        
-    instead, boot loaders reside as ordinary files on a FAT partition known as the EFI System Partition (ESP).
-    (Confusingly, Debian and Ubuntu installers refer to the ESP by the name "EFI boot partition")
-    but this name is non-standard.
+        or in BIOS Boot Partitions.
     
     GParted and parted identify the ESP as having its "boot flag" set,
     (although that terminology means something completely different on MBR disks.)
@@ -95,8 +66,9 @@ On a computer with a newer EFI rather than a BIOS:
     since it doesn't tuck raw code away in weird places.
     
     With ESP the boot loaders reside in files, just like OS-level programs.
-    This makes them easier to identify and manipulate. 
+    This makes them easier to identify and manipulate.
 
+#### ===================================================================
 
 ### Use GNUParted Live CD or USB. ###
 
@@ -106,7 +78,6 @@ On a computer with a newer EFI rather than a BIOS:
 
     #Note:  This is a basic partition scheme:
 
-    ==== - Make 2 MB spare space for UEFI?
     sdX1 @ FAT32 partition - 512 MB
     ==== - Make 1 MB of spare space for security reasons
     sdX2 @ Ext4 - Can be the rest of the space
@@ -141,65 +112,57 @@ For example:
     set 1 boot on
     quit
     
-### ######################################
-#B# Installing Arch
-### ######################################
+#### ===================================================================
 
-1. Show the storage medias. Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
+    Installing Arch Linux
+
+    1. Show the storage medias. Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
     
-$   fdisk -l
+    fdisk -l
 
-2. Mount the partitions. First the main storage partition then the boot partition referred as the $esp.
+    2. Mount the partitions. First the main storage partition then the boot partition referred as the $esp.
 
-$   mount /dev/sda2 /mnt
+    mount /dev/sda2 /mnt
 
-#The simplest option is to mount it at /boot, since this allows pacman to directly
-#update the kernel that the EFI firmware will read.
-#For both BIOS and UEFI system mount the boot like:
+    mkdir /mnt/boot
 
-# The esp /boot/efi used by: Ubuntu and Manjaro
+    mount /dev/sda1 /mnt/boot
 
-$   mkdir /mnt/boot
-$   mkdir /mnt/boot/efi
+    # The simplest option is to mount it at /boot, since this allows pacman to directly
+    # update the kernel that the EFI firmware will read.
 
-$   mount /dev/sda1 /mnt/boot/efi
+    # The ESP /boot/efi used by: Ubuntu and Manjaro
+    # If the ESP is other than /boot then you need to set up a copy hook when
+    # pacman updates the kernel in the future. https://wiki.archlinux.org/index.php/EFISTUB
 
-#$   mount /dev/sda1 /mnt/boot
-#If you mount the EFI System Partition, the $esp location, elsewhere than /boot (such as /boot/efi),
+    # grub-install --target=x86_64-efi --efi-directory=/boot
+    # will install on the location /boot/EFI
 
-#you will need to copy boot files to that location after a kernel update.
-#If the $esp location is other than /boot then you need to set up a copy hook when
-#pacman updates the kernel in the future. https://wiki.archlinux.org/index.php/EFISTUB
-#The efi folder is just a standard name convention for UEFI (Not Mandatory!)
+    # grub-install --target=x86_64-efi --efi-directory=/boot/efi
+    # will install on the location /boot/efi/EFI
 
-# grub-install --target=x86_64-efi --efi-directory=/boot
-# will install on the location /boot/EFI
-# grub-install --target=x86_64-efi --efi-directory=/boot/efi
-# will install on the location /boot/efi/EFI
+    3. Check that there is an internet connection.
 
-3. Check that there is an internet connection.
+    ping -c 3 www.google.com
 
-$   ping -c 3 www.google.com
 
-4. Dowload the base installation on the storage partition.
+    4. Dowload the base installation on the storage partition.
 
-$   pacstrap /mtn base
-
-    #Note:  It is actually Grub2 that is installed.
+    pacstrap /mtn base
+  
+    # pacstrap /mnt grub-efi-x86_64
     
-$   pacstrap /mnt grub-efi-x86_64
-$   pacstrap /mnt efibootmgr
+    # pacstrap /mnt efibootmgr
 
-    #Note:  For BIOS system the grub package is just,
-    #$      pacstrap /mnt grub
+
+    5. Create a file system table.
+
+    genfstab -p /mnt >> /mnt/etc/fstab
+
+
+    6. SSD, then add the discard option to /mnt/etc/fstab
     
-5. Create a file system table.
-
-$   genfstab -p /mnt >> /mnt/etc/fstab
-
-5X. If there is an SSD then add the discard option to /mnt/etc/fstab
-    
-$   nano /mnt/etc/fstab
+    vim /mnt/etc/fstab
 
 >   /dev/sda1  /       ext4   defaults,noatime,discard   0  1
 >   /dev/sda2  /home   ext4   defaults,noatime,discard   0  2
@@ -210,76 +173,52 @@ $   nano /mnt/etc/fstab
     #       1 = The first partition to check, the root partition should be set to this.
     #       2 = Check this partition, this is not the root partition.
     
-6. Change to arch on the storage partition as root user.
+    7. Change to arch on the storage partition as root user.
 
-$   arch-chroot /mnt
+    arch-chroot /mnt
 
-7. Create the initcpio file, which is the initial RAM disk filesystem.
+    # Install grub packages
 
-$   mkinitcpio -p linux
+    pacman -S grub efibootmgr
 
-8. Make a grub config file.
-
-    #Note:  To fix an error.
-
-$   nano /etc/default/grub
-
-    #Note:  Add the line at the end of the file.
-
->   GRUB_DISABLE_SUBMENU=y
-
-$   grub-mkconfig -o /boot/grub/grub.cfg
-
-9. Install GRUB 2 boot loader
-
-$   mount -t efivarfs efivarfs /sys/firmware/efi/efivars
-
-    #Note: efibootmgr is only necesary for UEFI system
-    #If not installed do,
-    #$   pacman -S grub efibootmgr
-
-#NOTE:
-# http://lists.gnu.org/archive/html/help-grub/2012-12/msg00025.html
-# --efi-directory=/boot/efi on UEFI system is just established convention.
-# grub-install will search through several likely locations and /boot/efi
-# is one of them. The ESP can be given directly as --efi-directory, the $esp path.
-# grub-install simply looks for /boot/efi, /boot/EFI and is using root
-# directory as last resort if it is FAT. That's all. I would not call
-# this "automatic" - someone has to mount /boot/efi first and this is
-# manual step.
-
-$   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch --recheck --debug
-
-    #Note:  If success this is the output.
-
->   Installation finished. No error reported
-
-    #Note:  For BIOS system 32 or 64 bit the grub-install command is
-    #$      grub-install --target=i386-pc --recheck --debug /dev/sdX
-    #       where sdX is the disk where the /boot partition is mounted. In this guide it is /dev/sda
-
-10. Set a password for the root.
-
-$   passwd
-
-11. Exit the arch-root user.
-
-$   exit
-
-12. Unmount the storage media.
-
-    #Note:  The spelling for the command is U M O U N T
+    # GRUB is the bootloader while efibootmgr creates bootable .efi stub entries used by the GRUB installation script.
     
-$   umount -R /mnt/boot/efi /mnt
+    8. Create the initcpio file, which is the initial RAM disk filesystem.
 
-13. Reboot the computer with the systemd command.
+    mkinitcpio -p linux
 
-$   systemctl reboot
+    
+    9. Make a grub config file.
+
+    # /etc/default/grub
+
+    grub-mkconfig -o /boot/grub/grub.cfg
 
 
-### ############################################
-#C# Configure the installed Arch system
-### ############################################
+    10. Install GRUB 2 boot loader
+
+    # mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck --debug
+
+    11. Set a password for the root.
+
+    passwd
+
+    12. Exit the arch-root user.
+
+    exit
+
+    13. Unmount the storage media.
+    
+    umount -R /mnt/boot /mnt
+
+    14. Reboot the computer with the systemd command.
+
+    systemctl reboot
+
+
+### Configure Arch Linux
 
 1. Set a hostname with sytemd. The name of the computer in this example it is set to box.
 
@@ -338,9 +277,7 @@ $   systemctl enable ntpd.service
 $   systemctl reboot
 
 
-### #############################################
-#D# Add a new user
-### #############################################
+### Add a new user
 
     #Note:  To add a new user, use the useradd command.
     #       useradd -m -g [initial_group] -G [additional_groups] -s [login_shell] [username]
@@ -452,6 +389,11 @@ $   pacman -S git vim
 $   cd
 $   git clone https://github.com/thedemz/linux-arch-install
 
+
+### Install fonts
+
+ttf-droid
+noto-fonts
 
 ### ############################################
 #F# Partition examples
@@ -674,3 +616,37 @@ $   tune2fs -c 20 /dev/sda1
 To see the frequency number and the current mount count for a specific partition
 
 $   dumpe2fs -h /dev/sda1 | grep -i 'mount count'
+
+
+### EFI
+
+EFI - is the boot partition, there is defined what bootloaders to boot.
+
+efibootmgr can add or remove entries to bootloaders, where on the system they are located.
+
+efibootmgr -v
+
+shows the order of bootloader entries.
+
+EFI/BOOT/bootx64.efi
+EFI/Microsoft/Boot/bootmgfw.efi
+
+http://www.rodsbooks.com/efi-bootloaders/installation.html#alternative-naming
+
+
+
+
+
+
+
+### Bootloader configuration
+
+This should be in some FAQ. Obviously, your /boot partition or bootloader is not configured properly. Thus, during update, the new kernel is installed, but not to the place where your bootloader looks for it. Thus, you boot the old kernel, but your hard drive only has the new modules.
+
+Your inability to mount vfat partitions is only one of many failures that you will see until you fix this.
+It might be advisable for people on EFI systems to add vfat to their MODULES array in mkinitcpio.conf, so that when this happens, they can still mount their ESP and sync the correct kernel+initrd.
+
+mkinitcpio, defaults to place vmlinux and .img files in /boot.
+
+
+
