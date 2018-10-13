@@ -1,3 +1,9 @@
+AUR Helpers:
+
+yay
+aurman - (DEPRICATED)
+yaurt - (DEPRICATED)
+
 Check Linux Kernel Version
 
 $ pacman -Qi linux
