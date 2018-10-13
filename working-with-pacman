@@ -77,3 +77,7 @@ $ pacman -Qdt
 To list all packages explicitly installed and not required as dependencies:
 
 $ pacman -Qet
+
+List all foreign packages.
+
+$ pacman -Qm
