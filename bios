@@ -1,3 +1,5 @@
+pacman -S dmidecode
+
 dmibios -q
 
 T430s
