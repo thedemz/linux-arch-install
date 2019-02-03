@@ -6,9 +6,9 @@
 
 $   pacman -S cups cups-filters ghostscript gsfonts
 
-$   systemctl enable cups
+$   systemctl enable org.cups.cupsd
 
-$   systemctl start cups
+$   systemctl start org.cups.cupsd
 
 ### ###########################################
 ### Printer drivers
