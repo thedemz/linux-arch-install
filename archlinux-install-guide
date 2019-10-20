@@ -248,26 +248,51 @@ cp /mnt/EFI/grub/grub64.efi /mnt/EFI/BOOT/bootx64.efi
 
 
 
+11. Set a password for the root.
 
-    11. Set a password for the root.
-
-    passwd
-
-
-    12. Exit the arch-root user.
-
-    exit
+passwd
 
 
-    13. Unmount the storage media.
-    
-    umount -R /mnt/boot /mnt
+12. Install Wired Connection and other tools.
+
+```
+pacmam -S dhcpcd ntp sudo vim
+```
+
+13. Create a new user with sudo rights.
+
+```
+useradd -m -s /bin/bash USER_NAME
+```
+
+```
+passwd USER_NAME
+```
+
+```
+visudo
+```
+
+>`USER_NAME   ALL=(ALL) ALL`
 
 
-    14. Reboot the computer with the systemd command.
+14. Exit the arch-root user.
 
-    systemctl reboot
+```
+exit
+```
 
+15. Unmount the storage media.
+
+```
+umount -R /mnt/boot /mnt
+```
+
+16. Reboot the computer with the systemd command.
+
+```
+systemctl reboot
+```
 
 ### Configure Arch Linux
 
