@@ -155,9 +155,10 @@ Then add the discard option to /mnt/etc/fstab
 vim /mnt/etc/fstab
 ```
 
+https://mvysny.github.io/ssd-discard/
+
 ```
-/dev/sda1  /       ext4   defaults,noatime,discard   0  1
-/dev/sda2  /home   ext4   defaults,noatime,discard   0  2
+/dev/nvme0n1  /       ext4   defaults,relatime,discard   0  1
 ```    
 
 >The last column defines if the fsck should check the system.
