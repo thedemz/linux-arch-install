@@ -56,6 +56,56 @@ mount --mkdir /dev/nvme0n1p1 /mnt/boot
 
 ## 3. Check that there is an internet connection.
 
+https://wiki.archlinux.org/title/Iwd#iwctl
+
+```
+iwctl
+```
+
+```
+[iwd]# device list
+```
+
+```
+[iwd]# device wlan0 show
+```
+
+```
+[iwd]# device wlan0 set-property Powered on
+```
+
+```
+[iwd]# adapter list
+```
+
+```
+[iwd]# adapter phy0 show
+```
+
+```
+[iwd]# adapter phy0 set-property Powered on
+```
+
+```
+[iwd]# station wlan0 scan
+```
+
+You can then list all available networks:
+
+```
+[iwd]# station wlan0 get-networks
+```
+
+Finally, to connect to a network:
+
+```
+[iwd]# station wlan0 connect SSID
+```
+
+```
+iwctl --passphrase <password> <station> wlan0 connect <SSID>
+```
+
  `ping -c 3 www.google.com`
 
 
