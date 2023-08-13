@@ -115,9 +115,27 @@ iwctl --passphrase <password> <station> wlan0 connect <SSID>
 pacstrap -K /mnt base linux linux-firmware
 ```
 
-> `pacstrap /mnt grub-efi-x86_64 efibootmgr`
+> `pacstrap /mnt grub efibootmgr curl dhcpcd iwd`
 
 https://geo.mirror.pkgbuild.com/iso/latest/arch/pkglist.x86_64.txt
+
+
+https://archlinux.org/packages/core/any/base/
+
+https://archlinux.org/packages/core/x86_64/linux/
+
+https://archlinux.org/packages/core/any/linux-firmware/
+
+
+https://archlinux.org/packages/core/x86_64/grub/
+
+https://archlinux.org/packages/core/x86_64/efibootmgr/
+
+https://archlinux.org/packages/core/x86_64/curl/
+
+https://archlinux.org/packages/core/x86_64/dhcpcd/
+
+https://archlinux.org/packages/extra/x86_64/iwd/
 
 ## 5. Create a file system table.
 
