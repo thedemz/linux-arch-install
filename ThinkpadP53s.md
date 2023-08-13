@@ -115,7 +115,7 @@ iwctl --passphrase <password> <station> wlan0 connect <SSID>
 pacstrap -K /mnt base linux linux-firmware
 ```
 
-> `pacstrap /mnt grub efibootmgr curl dhcpcd iwd vim`
+> `pacstrap -G /mnt grub efibootmgr curl dhcpcd iwd vim`
 
 https://geo.mirror.pkgbuild.com/iso/latest/arch/pkglist.x86_64.txt
 
