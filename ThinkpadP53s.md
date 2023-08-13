@@ -27,13 +27,13 @@ fdisk -l
 https://wiki.archlinux.org/title/EFI_system_partition
 
 ```
-mkfs.fat -F 32 /dev/mvme0n1p1
+mkfs.fat -F 32 /dev/nvme0n1p1
 ```
 
 https://wiki.archlinux.org/title/ext4
 
 ```
-mkfs.ext4 /dev/mvme0n1p2
+mkfs.ext4 /dev/nvme0n1p2
 ```
 
 ## 2. Mount the partitions.
@@ -41,9 +41,9 @@ mkfs.ext4 /dev/mvme0n1p2
 First the main storage partition then the boot partition referred as the $esp.
 
 ```
-mount /dev/mvme0n1p2 /mnt
+mount /dev/nvme0n1p2 /mnt
 mkdir /mnt/boot
-mount /dev/mvme0n1p1 /mnt/boot
+mount /dev/nvme0n1p1 /mnt/boot
 ```
 
 > The simplest option is to mount it at /boot, since this allows pacman to directly
