@@ -259,9 +259,13 @@ systemctl enable NetworkManager.service
 
 ## 14. Create a new user with sudo rights.
 
+```
+pacmam -S sudo
+```
+
 > To add a new user, use the useradd command.
 > `useradd -m -g [initial_group] -G [additional_groups] -s [login_shell] [username]`
-    
+
 ```
 useradd -m -s /bin/bash USER_NAME
 ```
