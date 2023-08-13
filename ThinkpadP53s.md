@@ -210,7 +210,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ```
 mkdir -p /boot/EFI/BOOT
-cp /mnt/EFI/GRUB/grubx64.efi /mnt/EFI/BOOT/bootx64.efi
+cp /boot/EFI/GRUB/grubx64.efi /boot/EFI/BOOT/bootx64.efi
 ```
 
 ### UEFI and GRUB
