@@ -22,6 +22,15 @@ Find the sdX name of the storage media that was partitioned with GPT. In this gu
 fdisk -l
 ```
 
+### format partitions
+
+https://wiki.archlinux.org/title/EFI_system_partition
+
+```
+mkfs.fat -F 32 /dev/mvme01p1
+```
+
+
 ## 2. Mount the partitions.
 
 First the main storage partition then the boot partition referred as the $esp.
