@@ -42,8 +42,7 @@ First the main storage partition then the boot partition referred as the $esp.
 
 ```
 mount /dev/nvme0n1p2 /mnt
-mkdir /mnt/boot
-mount /dev/nvme0n1p1 /mnt/boot
+mount --mkdir /dev/nvme0n1p1 /mnt/boot
 ```
 
 > The simplest option is to mount it at /boot, since this allows pacman to directly
