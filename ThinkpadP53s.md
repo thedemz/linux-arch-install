@@ -27,9 +27,14 @@ fdisk -l
 https://wiki.archlinux.org/title/EFI_system_partition
 
 ```
-mkfs.fat -F 32 /dev/mvme01p1
+mkfs.fat -F 32 /dev/mvme0n1p1
 ```
 
+https://wiki.archlinux.org/title/ext4
+
+```
+mkfs.ext4 /dev/mvme0n1p2
+```
 
 ## 2. Mount the partitions.
 
