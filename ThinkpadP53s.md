@@ -41,9 +41,9 @@ mkfs.ext4 /dev/mvme0n1p2
 First the main storage partition then the boot partition referred as the $esp.
 
 ```
-mount /dev/sda2 /mnt
+mount /dev/mvme0n1p2 /mnt
 mkdir /mnt/boot
-mount /dev/sda1 /mnt/boot
+mount /dev/mvme0n1p1 /mnt/boot
 ```
 
 > The simplest option is to mount it at /boot, since this allows pacman to directly
