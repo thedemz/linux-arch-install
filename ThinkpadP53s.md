@@ -141,8 +141,10 @@ https://archlinux.org/packages/extra/x86_64/vim/
 
 ## 5. Create a file system table.
 
+https://wiki.archlinux.org/title/Fstab
+
 ```
-genfstab -p /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ## 6. SSD
