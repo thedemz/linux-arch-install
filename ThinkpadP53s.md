@@ -112,11 +112,12 @@ iwctl --passphrase <password> <station> wlan0 connect <SSID>
  ## 4. Dowload the base installation on the storage partition.
 
 ```
-pacstrap /mtn base linux linux-firmware
+pacstrap -K /mnt base linux linux-firmware
 ```
 
 > `pacstrap /mnt grub-efi-x86_64 efibootmgr`
 
+https://geo.mirror.pkgbuild.com/iso/latest/arch/pkglist.x86_64.txt
 
 ## 5. Create a file system table.
 
