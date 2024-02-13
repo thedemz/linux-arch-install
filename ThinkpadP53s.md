@@ -200,11 +200,11 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --re
 
 ## 10. Make a grub config file.
 
+> The settings for the configuration file is defined in: `/etc/default/grub`
+
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-
-> /etc/default/grub
     
 ## 11. Create a EFI fallback .efi file (as defined in the EFI standard.)
 
