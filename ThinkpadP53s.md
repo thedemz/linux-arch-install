@@ -4,19 +4,21 @@
 
 ## Checklist:
 
-UEFI Motherboard
-64 bit x86 CPU
-GPT Partition: 512 fat32 with boot and esp flag set. For GRUB2.
-GRUB 2
-Wired connection
-BIOS Secure Boot disabled
-archlinux.iso on USB
++ UEFI Motherboard
++ 64 bit x86 CPU
++ GPT Partition: 512 fat32 with boot and esp flag set. For GRUB2.
++ GRUB 2
++ Wired connection
++ BIOS Secure Boot disabled
++ archlinux.iso on USB
 
 # Installing Arch Linux
 
 ## 1. Show the storage medias.
 
-Find the sdX name of the storage media that was partitioned with GPT. In this guide the X = a
+Find the sdX name of the storage media that was partitioned with GPT.
+
+> In this guide: `X = a`
 
 ```
 fdisk -l
